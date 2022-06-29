@@ -5,8 +5,10 @@ import keyboard
 cam = cv2.VideoCapture(0)
 
 while True:
-    cam.read()
-    cv2.imshow('Camera', cam)
+    ret, frame = cam.read()
+    cv2.imshow('Camera', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+cam.release()
+cv2.destroyAllWindows()
