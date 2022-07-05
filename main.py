@@ -48,7 +48,7 @@ while True:
 
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
-    dst = cv2.warpPerspective(og,M,(800,800))
+    dst = cv2.warpPerspective(og,M,(650,300))
     cv2.imshow('warped',dst)
     
     # frame = cv2.bitwise_not(dst)
