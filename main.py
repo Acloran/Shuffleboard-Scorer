@@ -102,7 +102,7 @@ while True:
     ret,thresh = cv2.threshold(blueMask,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, 1, 2) 
       
-    for i in contours[0,:]:
+    for i in contours[:]:
         M = cv2.moments(i)
         # draw the outer circle
         X = int(M['m10']/M['m00'])
