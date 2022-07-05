@@ -43,10 +43,12 @@ cv2.createTrackbar('high G','controls',255,255,callback)
 cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
-
+#define an all black image
+outputImg = np.zeros((512,512,3), np.uint8)
 
 while True:
     #ret, og = cam.read()
+    #straighten image
     og = cam
 
     pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
@@ -55,27 +57,43 @@ while True:
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
     dst = cv2.warpPerspective(og,M,(620,300))
-    #cv2.imshow('warped',dst)
     
+    #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    bgr_low = np.array([B_low, G_low, R_low], np.uint8)
-    bgr_high = np.array([B_high, G_high, R_high], np.uint8)
+    #Making the Mask for Blue Pucks
+    #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
+    #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-	#making mask for hsv range
-    mask = cv2.inRange(frame, bgr_low, bgr_high)
-    mask = cv2.medianBlur(mask,5)
+    blue_bgr_low = np.array([0, 156, 137], np.uint8)
+    blue_bgr_high = np.array([160, 255, 255], np.uint8)
+
+	
+    blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
+    blueMask = cv2.medianBlur(blueMask,5)
+
+    #Drawing detected circles
+    circles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,8,
+                            param1=50,param2=30,minRadius=4,maxRadius=0)
+
+    circles = np.uint16(np.around(circles))
+    for i in circles[0,:]:
+        # draw the outer circle
+        cv2.circle(outputImg,(i[0],i[1]),i[2],(255,0,0),-1)
+        # draw the center of the circle
+        cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
 
-    res = cv2.bitwise_and(dst, dst, mask=mask)
+    #res = cv2.bitwise_and(dst, dst, mask=blueMask)
 
-    cv2.line(res,(392,0),(392,300),(0,255,0),2)
-    cv2.line(res,(498,0),(498,300),(0,255,0),2)
+    #draw scoring lines
+    cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
+    cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
 
 
-    cv2.imshow('blurred',mask)
-    cv2.imshow('res',res)
+    # cv2.imshow('blurred',mask)
+    # cv2.imshow('res',res)
 
     #cv2.imshow('Camera', frame)
 
