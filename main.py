@@ -10,7 +10,8 @@ cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 while True:
     ret, frame = cam.read()
 
-    cv2.circle(frame,(400,400),8,(255,0,0),2)
+    cv2.circle(frame,(640,512),10,(255,0,0),2)
+    cv2.circle(frame,(600,512),10,(0,0,255),2)
 
     cv2.imshow('Camera', frame)
 
