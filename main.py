@@ -100,7 +100,7 @@ while True:
                             param1=50,param2=20,minRadius=4,maxRadius=0)
 
     redcircles = np.uint16(np.around(redcircles))
-    #print(circles)
+    print(redcircles[1][2])
     for i in redcircles[0,:]:
         # draw the outer circle
         cv2.circle(outputImg,(i[0],i[1]),i[2],(0,0,255),2)
