@@ -44,7 +44,7 @@ cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
 #define an all black image
-outputImg = np.zeros((620,300,3), np.uint8)
+outputImg = np.zeros((300,620,3), np.uint8)
 
 while True:
     #ret, og = cam.read()
