@@ -50,7 +50,15 @@ while True:
 
     #define an all black image
     outputImg = np.zeros((300,620,3), np.uint8)
+    #draw scoring lines and numbers
+    cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
+    cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
+    font = cv2.FONT_HERSHEY_TRIPLEX
+    cv2.putText(outputImg,'1',(335,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'2',(426,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'3',(525,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
 
+    
     ret, og = cam.read()
     
     #straighten image
@@ -119,13 +127,7 @@ while True:
 
     #res = cv2.bitwise_and(dst, dst, mask=blueMask)
 
-    #draw scoring lines and numbers
-    cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
-    cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
-    font = cv2.FONT_HERSHEY_TRIPLEX
-    cv2.putText(outputImg,'1',(335,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'2',(430,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'3',(525,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    
 
     # cv2.imshow('blurred',mask)
     cv2.imshow('result',outputImg)
