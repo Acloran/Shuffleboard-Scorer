@@ -98,10 +98,13 @@ while True:
     #         cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
     #         # draw the center of the circle
     #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
-    cv2.imshow('blue',blueMask)
-    ret,thresh = cv2.threshold(blueMask,127,255,0)
+    
+    kernel = np.ones((5,5),np.uint8)
+    closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
+
+    ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, 1, 2) 
-      
+    cv2.imshow('blue',closing)  
     for i in contours[:]:
         M = cv2.moments(i)
         # draw the outer circle
