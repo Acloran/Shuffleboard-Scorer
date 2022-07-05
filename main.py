@@ -2,12 +2,12 @@ import numpy as np
 import cv2
 import keyboard
 
-cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
+#cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
-cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
+#cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+#cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
-#cam = cv2.imread('images/c1.png')
+cam = cv2.imread('images/c1.png')
 
 def callback(x):
 	global H_low,H_high,S_low,S_high,V_low,V_high
@@ -40,16 +40,18 @@ cv2.createTrackbar('low V','controls',0,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
 
 while True:
-    ret, og = cam.read()
-    #frame = cam
+    #ret, og = cam.read()
+    frame = cam
     frame = cv2.bitwise_not(og)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    median = cv2.medianBlur(hsv,5)
 
     hsv_low = np.array([H_low, S_low, V_low], np.uint8)
     hsv_high = np.array([H_high, S_high, V_high], np.uint8)
 
 	#making mask for hsv range
-    mask = cv2.inRange(hsv, hsv_low, hsv_high)
+    mask = cv2.inRange(median, hsv_low, hsv_high)
     #print (mask)
     res = cv2.bitwise_and(frame, frame, mask=mask)
 
@@ -60,5 +62,5 @@ while True:
 
     if cv2.waitKey(1) == ord('q'):
         break
-cam.release()
+#cam.release()
 cv2.destroyAllWindows()
