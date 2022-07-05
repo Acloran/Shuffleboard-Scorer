@@ -1,3 +1,4 @@
+from doctest import OutputChecker
 import numpy as np 
 import cv2
 import keyboard
@@ -48,9 +49,10 @@ def callback(x):
 while True:
 
     #define an all black image
-    outputImg = np.zeros((300,620,3), np.uint8)
+    #outputImg = np.zeros((300,620,3), np.uint8)
 
     ret, og = cam.read()
+    outputImg = og
     #straighten image
     #og = cam
     
