@@ -10,34 +10,34 @@ import keyboard
 cam = cv2.imread('images/c1.png')
 
 def callback(x):
-	global H_low,H_high,S_low,S_high,V_low,V_high
+	global B_low,B_high,G_low,G_high,R_low,R_high
 	#assign trackbar position value to H,S,V High and low variable
-	H_low = cv2.getTrackbarPos('low H','controls')
-	H_high = cv2.getTrackbarPos('high H','controls')
-	S_low = cv2.getTrackbarPos('low S','controls')
-	S_high = cv2.getTrackbarPos('high S','controls')
-	V_low = cv2.getTrackbarPos('low V','controls')
-	V_high = cv2.getTrackbarPos('high V','controls')
+	B_low = cv2.getTrackbarPos('low B','controls')
+	B_high = cv2.getTrackbarPos('high B','controls')
+	G_low = cv2.getTrackbarPos('low G','controls')
+	G_high = cv2.getTrackbarPos('high G','controls')
+	R_low = cv2.getTrackbarPos('low R','controls')
+	R_high = cv2.getTrackbarPos('high R','controls')
 
 cv2.namedWindow('controls',2)
 cv2.resizeWindow("controls", 550,10);
 
-H_low = 0
-H_high = 179
-S_low= 0
-S_high = 255
-V_low= 0
-V_high = 255
+B_low = 0
+B_high = 255
+G_low= 0
+G_high = 255
+R_low= 0
+R_high = 255
 
 #create trackbars for high,low H,S,V 
-cv2.createTrackbar('low H','controls',87,179,callback)
-cv2.createTrackbar('high H','controls',99,179,callback)
+cv2.createTrackbar('low B','controls',0,255,callback)
+cv2.createTrackbar('high B','controls',255,255,callback)
 
-cv2.createTrackbar('low S','controls',111,255,callback)
-cv2.createTrackbar('high S','controls',201,255,callback)
+cv2.createTrackbar('low G','controls',0,255,callback)
+cv2.createTrackbar('high G','controls',255,255,callback)
 
-cv2.createTrackbar('low V','controls',205,255,callback)
-cv2.createTrackbar('high V','controls',255,255,callback)
+cv2.createTrackbar('low R','controls',0,255,callback)
+cv2.createTrackbar('high R','controls',255,255,callback)
 
 while True:
     #ret, og = cam.read()
@@ -45,13 +45,14 @@ while True:
     frame = cv2.bitwise_not(og)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    median = cv2.medianBlur(hsv,7)
+    
 
-    hsv_low = np.array([H_low, S_low, V_low], np.uint8)
-    hsv_high = np.array([H_high, S_high, V_high], np.uint8)
+    bgr_low = np.array([B_low, G_low, R_low], np.uint8)
+    bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
 	#making mask for hsv range
-    mask = cv2.inRange(median, hsv_low, hsv_high)
+    mask = cv2.inRange(frame, bgr_low, bgr_high)
+    median = cv2.medianBlur(mask,5)
     #print (mask)
     res = cv2.bitwise_and(cam, cam, mask=mask)
 
