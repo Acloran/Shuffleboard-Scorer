@@ -2,12 +2,12 @@ import numpy as np
 import cv2
 import keyboard
 
-#cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
+cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
-#cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
-#cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
-cam = cv2.imread('images/c1.png')
+#cam = cv2.imread('images/c1.png')
 
 def callback(x):
 	global H_low,H_high,S_low,S_high,V_low,V_high
@@ -40,7 +40,8 @@ cv2.createTrackbar('low V','controls',0,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
 
 while True:
-    og = cam
+    ret, og = cam.read()
+    #frame = cam
     frame = cv2.bitwise_not(og)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
