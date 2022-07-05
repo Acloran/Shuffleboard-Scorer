@@ -23,33 +23,33 @@ def callback(x):
 
 
 
-# cv2.namedWindow('controls',2)
-# cv2.resizeWindow("controls", 550,10);
+cv2.namedWindow('controls',2)
+cv2.resizeWindow("controls", 550,10);
 
-# B_low = 0
-# B_high = 255
-# G_low= 0
-# G_high = 255
-# R_low= 0
-# R_high = 255
+B_low = 0
+B_high = 255
+G_low= 0
+G_high = 255
+R_low= 0
+R_high = 255
 
 
-# #create trackbars for high,low H,S,V 
-# cv2.createTrackbar('low B','controls',0,255,callback)
-# cv2.createTrackbar('high B','controls',255,255,callback)
+#create trackbars for high,low H,S,V 
+cv2.createTrackbar('low B','controls',0,255,callback)
+cv2.createTrackbar('high B','controls',255,255,callback)
 
-# cv2.createTrackbar('low G','controls',0,255,callback)
-# cv2.createTrackbar('high G','controls',255,255,callback)
+cv2.createTrackbar('low G','controls',0,255,callback)
+cv2.createTrackbar('high G','controls',255,255,callback)
 
-# cv2.createTrackbar('low R','controls',0,255,callback)
-# cv2.createTrackbar('high R','controls',255,255,callback)
+cv2.createTrackbar('low R','controls',0,255,callback)
+cv2.createTrackbar('high R','controls',255,255,callback)
 
 
 
 while True:
 
     #define an all black image
-    #outputImg = np.zeros((300,620,3), np.uint8)
+    outputImg = np.zeros((300,620,3), np.uint8)
 
     ret, og = cam.read()
     
@@ -62,7 +62,7 @@ while True:
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
     dst = cv2.warpPerspective(og,M,(620,300))
-    outputImg = dst
+    
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -119,10 +119,11 @@ while True:
 
     #res = cv2.bitwise_and(dst, dst, mask=blueMask)
 
-    #draw scoring lines
+    #draw scoring lines and numbers
     cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
     cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
-
+    font = cv2.FONT_HERSHEY_TRIPLEX
+    cv2.putText(outputImg,'1',(370,B_low), font, 12,(0,255,0),1,cv2.LINE_AA)
 
     # cv2.imshow('blurred',mask)
     cv2.imshow('result',outputImg)
