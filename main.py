@@ -44,7 +44,7 @@ cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
 #define an all black image
-outputImg = np.zeros((512,512,3), np.uint8)
+outputImg = np.zeros((620,300,3), np.uint8)
 
 while True:
     #ret, og = cam.read()
@@ -75,9 +75,10 @@ while True:
 
     #Drawing detected circles
     circles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,8,
-                            param1=50,param2=30,minRadius=4,maxRadius=0)
+                            param1=50,param2=3,minRadius=4,maxRadius=0)
 
     circles = np.uint16(np.around(circles))
+    print(circles)
     for i in circles[0,:]:
         # draw the outer circle
         cv2.circle(outputImg,(i[0],i[1]),i[2],(255,0,0),-1)
