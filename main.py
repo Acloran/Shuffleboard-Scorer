@@ -42,7 +42,15 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 while True:
     #ret, og = cam.read()
     og = cam
-    frame = cv2.bitwise_not(og)
+
+    pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
+    pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
+
+    M = cv2.getPerspectiveTransform(pts1,pts2)
+
+    dst = cv2.warpPerspective(og,M,(300,300))
+
+    frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     
