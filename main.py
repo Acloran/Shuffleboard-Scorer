@@ -98,7 +98,8 @@ while True:
             cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
             # draw the center of the circle
             cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
-            
+    cv2.imshow('blue',blueMask)
+        
     
 
     #making the red mask
@@ -121,7 +122,7 @@ while True:
             cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
             # draw the center of the circle
             cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
-   
+    cv2.imshow('red',redMask)
 
 
 
