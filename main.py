@@ -81,7 +81,7 @@ while True:
     #print(circles)
     for i in bluecircles[0,:]:
         # draw the outer circle
-        cv2.circle(outputImg,(i[0],i[1]),i[2],(255,0,0),2)
+        cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
         # draw the center of the circle
         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     cv2.imshow('bluemask', blueMask)
@@ -100,10 +100,10 @@ while True:
                             param1=50,param2=20,minRadius=4,maxRadius=0)
 
     redcircles = np.uint16(np.around(redcircles))
-    print(redcircles)
+    #print(redcircles)
     for i in redcircles[0,:]:
         # draw the outer circle
-        cv2.circle(outputImg,(i[0],i[1]),i[2],(0,0,255),2)
+        cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
         # draw the center of the circle
         cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
     cv2.imshow('redmask', redMask)
