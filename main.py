@@ -47,10 +47,10 @@ while True:
 
 	#making mask for hsv range
     mask = cv2.inRange(hsv, hsv_low, hsv_high)
-    print (mask)
+    #print (mask)
     res = cv2.bitwise_and(frame, frame, mask=mask)
 
-    cv2.imshow('mask',mask)
+    #cv2.imshow('mask',mask)
     cv2.imshow('res',res)
 
     #cv2.imshow('Camera', frame)
