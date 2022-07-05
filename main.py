@@ -75,7 +75,7 @@ while True:
 
     #Drawing detected circles
     circles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,8,
-                            param1=50,param2=3,minRadius=4,maxRadius=0)
+                            param1=50,param2=20,minRadius=4,maxRadius=0)
 
     circles = np.uint16(np.around(circles))
     print(circles)
