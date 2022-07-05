@@ -45,7 +45,7 @@ while True:
     frame = cv2.bitwise_not(og)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    median = cv2.medianBlur(hsv,9)
+    median = cv2.medianBlur(hsv,7)
 
     hsv_low = np.array([H_low, S_low, V_low], np.uint8)
     hsv_high = np.array([H_high, S_high, V_high], np.uint8)
@@ -53,9 +53,9 @@ while True:
 	#making mask for hsv range
     mask = cv2.inRange(median, hsv_low, hsv_high)
     #print (mask)
-    res = cv2.bitwise_and(frame, frame, mask=mask)
+    res = cv2.bitwise_and(cam, cam, mask=mask)
 
-    #cv2.imshow('mask',mask)
+    cv2.imshow('blurred',median)
     cv2.imshow('res',res)
 
     #cv2.imshow('Camera', frame)
