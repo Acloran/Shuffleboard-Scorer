@@ -48,25 +48,24 @@ while True:
 
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
-    dst = cv2.warpPerspective(og,M,(650,300))
-    cv2.imshow('warped',dst)
+    dst = cv2.warpPerspective(og,M,(620,300))
+    #cv2.imshow('warped',dst)
     
-    # frame = cv2.bitwise_not(dst)
-    # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    frame = cv2.bitwise_not(dst)
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
+    bgr_low = np.array([B_low, G_low, R_low], np.uint8)
+    bgr_high = np.array([B_high, G_high, R_high], np.uint8)
+
+	#making mask for hsv range
+    mask = cv2.inRange(frame, bgr_low, bgr_high)
+    mask = cv2.medianBlur(mask,5)
     
 
-    # bgr_low = np.array([B_low, G_low, R_low], np.uint8)
-    # bgr_high = np.array([B_high, G_high, R_high], np.uint8)
+    res = cv2.bitwise_and(dst, dst, mask=mask)
 
-	# #making mask for hsv range
-    # mask = cv2.inRange(frame, bgr_low, bgr_high)
-    # mask = cv2.medianBlur(mask,5)
-    # #print (mask)
-    # res = cv2.bitwise_and(cam, cam, mask=mask)
-
-    # cv2.imshow('blurred',mask)
-    # cv2.imshow('res',res)
+    cv2.imshow('blurred',mask)
+    cv2.imshow('res',res)
 
     #cv2.imshow('Camera', frame)
 
