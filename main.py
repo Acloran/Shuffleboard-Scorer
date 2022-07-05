@@ -58,7 +58,7 @@ while True:
     cv2.putText(outputImg,'2',(426,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
     cv2.putText(outputImg,'3',(525,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
 
-    
+
     ret, og = cam.read()
     
     #straighten image
@@ -87,7 +87,7 @@ while True:
     blueMask = cv2.medianBlur(blueMask,5)
 
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,8,
+    bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,16,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
@@ -98,6 +98,7 @@ while True:
             cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
             # draw the center of the circle
             cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
+            
     
 
     #making the red mask
