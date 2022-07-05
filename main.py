@@ -123,7 +123,9 @@ while True:
     cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
     cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
     font = cv2.FONT_HERSHEY_TRIPLEX
-    cv2.putText(outputImg,'1',(350,B_low), font, 1.5,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'1',(335,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'2',(430,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'3',(525,B_low), font, 2.2,(0,255,0),2,cv2.LINE_AA)
 
     # cv2.imshow('blurred',mask)
     cv2.imshow('result',outputImg)
