@@ -64,6 +64,9 @@ while True:
 
     res = cv2.bitwise_and(dst, dst, mask=mask)
 
+    cv2.line(res,(200,0),(200,300),(0,255,0),2)
+
+
     cv2.imshow('blurred',mask)
     cv2.imshow('res',res)
 
