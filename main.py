@@ -93,7 +93,7 @@ while True:
 
 
     # cv2.imshow('blurred',mask)
-    # cv2.imshow('res',res)
+    cv2.imshow('result',outputImg)
 
     #cv2.imshow('Camera', frame)
 
