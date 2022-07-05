@@ -87,7 +87,7 @@ while True:
     blueMask = cv2.medianBlur(blueMask,5)
 
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,16,
+    bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
@@ -111,7 +111,7 @@ while True:
     redMask = cv2.medianBlur(redMask,5)
 
     #Drawing detected circles
-    redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,8,
+    redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
     if redcircles is not None:
         redcircles = np.uint16(np.around(redcircles))
