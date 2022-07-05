@@ -30,13 +30,13 @@ V_low= 0
 V_high = 255
 
 #create trackbars for high,low H,S,V 
-cv2.createTrackbar('low H','controls',0,179,callback)
-cv2.createTrackbar('high H','controls',179,179,callback)
+cv2.createTrackbar('low H','controls',87,179,callback)
+cv2.createTrackbar('high H','controls',99,179,callback)
 
-cv2.createTrackbar('low S','controls',0,255,callback)
-cv2.createTrackbar('high S','controls',255,255,callback)
+cv2.createTrackbar('low S','controls',111,255,callback)
+cv2.createTrackbar('high S','controls',201,255,callback)
 
-cv2.createTrackbar('low V','controls',0,255,callback)
+cv2.createTrackbar('low V','controls',205,255,callback)
 cv2.createTrackbar('high V','controls',255,255,callback)
 
 while True:
