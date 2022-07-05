@@ -10,14 +10,15 @@ import keyboard
 cam = cv2.imread('images/c1.png')
 
 def callback(x):
-	global B_low,B_high,G_low,G_high,R_low,R_high
+	global B_low,B_high,G_low,G_high,R_low,R_high,linePos
 	#assign trackbar position value to H,S,V High and low variable
-	B_low = cv2.getTrackbarPos('low B','controls')
-	B_high = cv2.getTrackbarPos('high B','controls')
-	G_low = cv2.getTrackbarPos('low G','controls')
-	G_high = cv2.getTrackbarPos('high G','controls')
-	R_low = cv2.getTrackbarPos('low R','controls')
-	R_high = cv2.getTrackbarPos('high R','controls')
+    B_low = cv2.getTrackbarPos('low B','controls')
+    B_high = cv2.getTrackbarPos('high B','controls')
+    G_low = cv2.getTrackbarPos('low G','controls')
+    G_high = cv2.getTrackbarPos('high G','controls')
+    R_low = cv2.getTrackbarPos('low R','controls')
+    R_high = cv2.getTrackbarPos('high R','controls')
+    linePos = cv2.getTrackbarPos('LinePosition','controls')
 
 cv2.namedWindow('controls',2)
 cv2.resizeWindow("controls", 550,10);
@@ -28,6 +29,7 @@ G_low= 0
 G_high = 255
 R_low= 0
 R_high = 255
+linePos = 10
 
 #create trackbars for high,low H,S,V 
 cv2.createTrackbar('low B','controls',0,255,callback)
@@ -38,6 +40,8 @@ cv2.createTrackbar('high G','controls',255,255,callback)
 
 cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
+
+cv2.createTrackbar('LinePosition','controls',0,650,callback)
 
 while True:
     #ret, og = cam.read()
@@ -64,7 +68,7 @@ while True:
 
     res = cv2.bitwise_and(dst, dst, mask=mask)
 
-    cv2.line(res,(200,0),(200,300),(0,255,0),2)
+    cv2.line(res,(linePos,0),(linePos,300),(0,255,0),2)
 
 
     cv2.imshow('blurred',mask)
