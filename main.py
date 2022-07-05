@@ -79,7 +79,7 @@ while True:
 
     bluecircles = np.uint16(np.around(bluecircles))
     #print(circles)
-    for i in circles[0,:]:
+    for i in bluecircles[0,:]:
         # draw the outer circle
         cv2.circle(outputImg,(i[0],i[1]),i[2],(255,0,0),2)
         # draw the center of the circle
