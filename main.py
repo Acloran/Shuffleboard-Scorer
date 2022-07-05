@@ -56,7 +56,7 @@ while True:
     #print (mask)
     res = cv2.bitwise_and(cam, cam, mask=mask)
 
-    cv2.imshow('blurred',median)
+    cv2.imshow('blurred',mask)
     cv2.imshow('res',res)
 
     #cv2.imshow('Camera', frame)
