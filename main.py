@@ -2,12 +2,12 @@ import numpy as np
 import cv2
 import keyboard
 
-#cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
+cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
-#cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
-#cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
-cam = cv2.imread('images/c1.png')
+#cam = cv2.imread('images/c1.png')
 
 def callback(x):
     global B_low,B_high,G_low,G_high,R_low,R_high
@@ -22,35 +22,38 @@ def callback(x):
 
 
 
-cv2.namedWindow('controls',2)
-cv2.resizeWindow("controls", 550,10);
+# cv2.namedWindow('controls',2)
+# cv2.resizeWindow("controls", 550,10);
 
-B_low = 0
-B_high = 255
-G_low= 0
-G_high = 255
-R_low= 0
-R_high = 255
+# B_low = 0
+# B_high = 255
+# G_low= 0
+# G_high = 255
+# R_low= 0
+# R_high = 255
 
 
-#create trackbars for high,low H,S,V 
-cv2.createTrackbar('low B','controls',0,255,callback)
-cv2.createTrackbar('high B','controls',255,255,callback)
+# #create trackbars for high,low H,S,V 
+# cv2.createTrackbar('low B','controls',0,255,callback)
+# cv2.createTrackbar('high B','controls',255,255,callback)
 
-cv2.createTrackbar('low G','controls',0,255,callback)
-cv2.createTrackbar('high G','controls',255,255,callback)
+# cv2.createTrackbar('low G','controls',0,255,callback)
+# cv2.createTrackbar('high G','controls',255,255,callback)
 
-cv2.createTrackbar('low R','controls',0,255,callback)
-cv2.createTrackbar('high R','controls',255,255,callback)
+# cv2.createTrackbar('low R','controls',0,255,callback)
+# cv2.createTrackbar('high R','controls',255,255,callback)
 
-#define an all black image
-outputImg = np.zeros((300,620,3), np.uint8)
+
 
 while True:
-    #ret, og = cam.read()
-    #straighten image
-    og = cam
 
+    #define an all black image
+    outputImg = np.zeros((300,620,3), np.uint8)
+
+    ret, og = cam.read()
+    #straighten image
+    #og = cam
+    
     pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
     pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
 
@@ -84,7 +87,7 @@ while True:
         cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
         # draw the center of the circle
         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
-    cv2.imshow('bluemask', blueMask)
+    
 
     #making the red mask
 
@@ -106,7 +109,7 @@ while True:
         cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
         # draw the center of the circle
         cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
-    cv2.imshow('redmask', redMask)
+   
 
 
 
