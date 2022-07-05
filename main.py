@@ -86,6 +86,29 @@ while True:
         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
 
+    red_bgr_low = np.array([0, 162, 0], np.uint8)
+    red_bgr_high = np.array([255, 255, 76], np.uint8)
+
+	
+    redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
+    redMask = cv2.medianBlur(blueMask,5)
+
+    #Drawing detected circles
+    circles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,8,
+                            param1=50,param2=20,minRadius=4,maxRadius=0)
+
+    circles = np.uint16(np.around(circles))
+    print(circles)
+    for i in circles[0,:]:
+        # draw the outer circle
+        cv2.circle(outputImg,(i[0],i[1]),i[2],(0,0,255),2)
+        # draw the center of the circle
+        cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
+
+
+
+
+
     #res = cv2.bitwise_and(dst, dst, mask=blueMask)
 
     #draw scoring lines
