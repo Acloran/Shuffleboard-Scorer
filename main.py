@@ -41,7 +41,7 @@ cv2.createTrackbar('high V','controls',255,255,callback)
 
 while True:
     #ret, og = cam.read()
-    frame = cam
+    og = cam
     frame = cv2.bitwise_not(og)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
