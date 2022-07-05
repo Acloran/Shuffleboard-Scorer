@@ -10,7 +10,7 @@ import keyboard
 cam = cv2.imread('images/c1.png')
 
 def callback(x):
-	global B_low,B_high,G_low,G_high,R_low,R_high,linePos
+    global B_low,B_high,G_low,G_high,R_low,R_high,linePos
 	#assign trackbar position value to H,S,V High and low variable
     B_low = cv2.getTrackbarPos('low B','controls')
     B_high = cv2.getTrackbarPos('high B','controls')
@@ -19,6 +19,8 @@ def callback(x):
     R_low = cv2.getTrackbarPos('low R','controls')
     R_high = cv2.getTrackbarPos('high R','controls')
     linePos = cv2.getTrackbarPos('LinePosition','controls')
+
+
 
 cv2.namedWindow('controls',2)
 cv2.resizeWindow("controls", 550,10);
