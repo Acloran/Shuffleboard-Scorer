@@ -52,7 +52,7 @@ while True:
 
 	#making mask for hsv range
     mask = cv2.inRange(frame, bgr_low, bgr_high)
-    median = cv2.medianBlur(mask,5)
+    mask = cv2.medianBlur(mask,5)
     #print (mask)
     res = cv2.bitwise_and(cam, cam, mask=mask)
 
