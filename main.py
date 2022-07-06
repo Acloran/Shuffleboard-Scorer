@@ -24,7 +24,7 @@ def callback(x):
 
 
 cv2.namedWindow('controls',2)
-cv2.resizeWindow("controls", 550,10);
+cv2.resizeWindow("controls", 550,10)
 
 B_low = 0
 B_high = 255
@@ -44,7 +44,30 @@ cv2.createTrackbar('high G','controls',255,255,callback)
 cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
+def findAndDrawCircles(img, bgr_low, bgr_high):
+	
+    mask = cv2.inRange(img, bgr_low, bgr_high)
+    median = cv2.medianBlur(mask,7)
 
+    kernel = np.ones((5,5),np.uint8)
+    kernel2 = np.ones((3,3),np.uint8)
+
+    closed = cv2.morphologyEx(median, cv2.MORPH_CLOSE, kernel)
+    eroded = cv2.erode(closed,kernel2,iterations = 1)
+
+    ret,thresh = cv2.threshold(eroded,127,255,0)
+    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
+
+    cv2.imshow('blue',closing)  
+    for i in contours[:]:
+        (x,y),radius = cv2.minEnclosingCircle(i)
+        center = (int(x),int(y))
+        radius = int(radius)
+        #cv2.circle(img,center,radius,(0,255,0),2)
+        if radius>10 and radius<25:
+            cv2.circle(outputImg,center,18,(255,0,0),2)
+            # draw the center of the circle
+            cv2.circle(outputImg,center,6,(255,0,0),-1)
 
 while True:
 
@@ -81,7 +104,7 @@ while True:
     #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
     blue_bgr_low = np.array([0, 0, 107], np.uint8)
-    blue_bgr_high = np.array([175, 220, 255], np.uint8)
+    blue_bgr_high = np.array([175, 255, 255], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
@@ -122,8 +145,8 @@ while True:
 
     #making the red mask
 
-    red_bgr_low = np.array([174, 171, 0], np.uint8)
-    red_bgr_high = np.array([255, 255, 83], np.uint8)
+    red_bgr_low = np.array([0, 166, 0], np.uint8)
+    red_bgr_high = np.array([255, 255, 102], np.uint8)
 
 	
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
