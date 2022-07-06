@@ -53,6 +53,7 @@ while True:
     #draw scoring lines and numbers
     cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
     cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
+    cv2.line(outputImg,(600,0),(600,300),(0,255,0),2)
     font = cv2.FONT_HERSHEY_TRIPLEX
     cv2.putText(outputImg,'1',(335,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
     cv2.putText(outputImg,'2',(426,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
@@ -103,7 +104,7 @@ while True:
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     #closing = cv2.erode(closing,kernel,iterations = 1)
     ret,thresh = cv2.threshold(closing,127,255,0)
-    contours,hierarchy = cv2.findContours(thresh, 1, 2) 
+    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
     cv2.imshow('blue',closing)  
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
@@ -117,8 +118,8 @@ while True:
 
     #making the red mask
 
-    red_bgr_low = np.array([0, 162, 0], np.uint8)
-    red_bgr_high = np.array([255, 255, 76], np.uint8)
+    red_bgr_low = np.array([174, 171, 0], np.uint8)
+    red_bgr_high = np.array([255, 255, 83], np.uint8)
 
 	
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
