@@ -98,7 +98,7 @@ while True:
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
+    gray = cv2.cvtColor(dst, cv2.COLOR_BRG2GRAY)
     #Making the Mask for Blue Pucks
     #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
@@ -117,7 +117,7 @@ while True:
     #closing = cv2.erode(closing,kernel2,iterations = 1)
     cv2.imshow('blue',closing)  
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(hsv,cv2.HOUGH_GRADIENT,1,2,
+    bluecircles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
