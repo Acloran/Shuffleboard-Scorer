@@ -18,7 +18,7 @@ while(True):
 
     dst = cv2.warpPerspective(frame,M,(620,300))
     if cv2.waitKey(1) & 0xFF == ord('y'): #save on pressing 'y' 
-        cv2.imwrite('images/warpedbackground.png',dst)
+        cv2.imwrite('images/c1.png',dst)
         cv2.destroyAllWindows()
         break
 
