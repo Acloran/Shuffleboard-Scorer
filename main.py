@@ -98,26 +98,26 @@ while True:
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    gray = cv2.cvtColor(hsv, cv2.COLOR_BGR2GRAY)
+    
     #Making the Mask for Blue Pucks
-    #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
-    #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
+    bgr_low = np.array([B_low, G_low, R_low], np.uint8)
+    bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    # blue_bgr_low = np.array([0, 0, 107], np.uint8)
-    # blue_bgr_high = np.array([175, 255, 255], np.uint8)
+    blue_bgr_low = np.array([0, 0, 107], np.uint8)
+    blue_bgr_high = np.array([175, 255, 255], np.uint8)
 
 	
-    # blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    # blueMask = cv2.medianBlur(blueMask,7)
+    blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
+    blueMask = cv2.medianBlur(blueMask,7)
 
-    # kernel = np.ones((5,5),np.uint8)
-    # kernel2 = np.ones((3,3),np.uint8)
+    kernel = np.ones((5,5),np.uint8)
+    kernel2 = np.ones((3,3),np.uint8)
 
-    # closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    # #closing = cv2.erode(closing,kernel2,iterations = 1)
-    # cv2.imshow('blue',closing)  
+    closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
+    #closing = cv2.erode(closing,kernel2,iterations = 1)
+    cv2.imshow('blue',closing)  
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,12,
+    bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1,12,
                             param1=70,param2=45,minRadius=12,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
