@@ -3,7 +3,10 @@ import numpy as np
 import cv2
 import keyboard
 
-cam = cv2.imread('images/c1.png')
+cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
+
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
 def callback(x):
     global H_low,H_high,S_low,S_high,V_low,V_high
@@ -43,7 +46,7 @@ cv2.createTrackbar('high V','controls',255,255,callback)
 
 while True:
 
-    og = cam
+    ret, og = cam.read()
     
     pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
     pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
@@ -80,3 +83,4 @@ while True:
         break
 
 cv2.destroyAllWindows()
+cam.release()
