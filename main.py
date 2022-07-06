@@ -110,15 +110,15 @@ while True:
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
     blueMask = cv2.medianBlur(blueMask,7)
 
-    kernel = np.ones((5,5),np.uint8)
+    kernel = np.ones((7,7),np.uint8)
     kernel2 = np.ones((3,3),np.uint8)
 
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     #closing = cv2.erode(closing,kernel2,iterations = 1)
     cv2.imshow('blue',closing)  
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1,12,
-                            param1=70,param2=45,minRadius=12,maxRadius=0)
+    bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
+                            param1=40,param2=15,minRadius=12,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
     #print(circles)
