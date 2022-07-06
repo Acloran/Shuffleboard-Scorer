@@ -9,7 +9,7 @@ cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (no
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
 while True:
-    img = cam.read()
+    ret, img = cam.read()
     cv2.imshow('result',img)
 
     #cv2.imshow('Camera', frame)
