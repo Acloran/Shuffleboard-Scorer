@@ -125,16 +125,16 @@ while True:
     redMask = cv2.medianBlur(redMask,5)
 
     #Drawing detected circles
-    # redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
-    #                         param1=50,param2=20,minRadius=4,maxRadius=0)
-    # if redcircles is not None:
-    #     redcircles = np.uint16(np.around(redcircles))
-    #     #print(redcircles)
-    #     for i in redcircles[0,:]:
-    #         # draw the outer circle
-    #         cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
-    #         # draw the center of the circle
-    #         cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
+    redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
+                            param1=50,param2=20,minRadius=10,maxRadius=0)
+    if redcircles is not None:
+        redcircles = np.uint16(np.around(redcircles))
+        #print(redcircles)
+        for i in redcircles[0,:]:
+            # draw the outer circle
+            cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
+            # draw the center of the circle
+            cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
     cv2.imshow('red',redMask)
 
 
