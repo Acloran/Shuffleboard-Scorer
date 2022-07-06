@@ -152,6 +152,7 @@ while True:
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
     redMask = cv2.medianBlur(redMask,5)
     redMask = cv2.morphologyEx(redMask, cv2.MORPH_CLOSE, kernel)
+    redMask = cv2.erode(redMask,kernel2,iterations = 1)
 
     #Drawing detected circles
     redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
