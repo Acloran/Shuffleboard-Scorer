@@ -43,14 +43,15 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 
 while True:
 
-    og = cam
+    # og = cam
     
-    pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
-    pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
+    # pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
+    # pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
 
-    M = cv2.getPerspectiveTransform(pts1,pts2)
+    # M = cv2.getPerspectiveTransform(pts1,pts2)
 
-    dst = cv2.warpPerspective(og,M,(620,300))
+    # dst = cv2.warpPerspective(og,M,(620,300))
+    dst = cam
     cv2.imshow('raw',dst) 
     #recolor Image
     frame = cv2.bitwise_not(dst)
