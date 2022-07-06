@@ -33,7 +33,7 @@ while True:
     bgr_low = np.array([0, 0, 107], np.uint8)
     bgr_high = np.array([175, 255, 255], np.uint8)
 
-    result = cv2.inRange(grayDifference, 1, 255)
+    result = cv2.inRange(grayDifference, 10, 255)
 
     #fgmask1 = fgbg1.apply(dst)
 
