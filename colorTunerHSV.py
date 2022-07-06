@@ -60,9 +60,21 @@ while True:
     blue_bgr_high = np.array([H_high, S_high, V_high], np.uint8)
 
 	
-    blueMask = cv2.inRange(hsv, blue_bgr_low, blue_bgr_high)
+    mask = cv2.inRange(hsv, blue_bgr_low, blue_bgr_high)
 
-    cv2.imshow('masked img', blueMask)
+
+    median = cv2.medianBlur(mask,7)
+
+    kernel = np.ones((5,5),np.uint8)
+    kernel2 = np.ones((3,3),np.uint8)
+
+    closed = cv2.morphologyEx(median, cv2.MORPH_CLOSE, kernel)
+    eroded = cv2.erode(closed,kernel2,iterations = 1)
+
+    
+
+
+    cv2.imshow('masked img', eroded)
 
     if cv2.waitKey(1) == ord('q'):
         break
