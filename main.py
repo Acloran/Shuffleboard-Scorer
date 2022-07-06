@@ -108,13 +108,13 @@ while True:
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    blueMask = cv2.medianBlur(blueMask,7)
+    blueMask = cv2.medianBlur(blueMask,3)
 
-    kernel = np.ones((9,9),np.uint8)
+    kernel = np.ones((1,1),np.uint8)
     kernel2 = np.ones((9,9),np.uint8)
 
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    closing = cv2.erode(closing,kernel2,iterations = 1)
+    #closing = cv2.erode(closing,kernel2,iterations = 1)
     cv2.imshow('blue',closing)  
     #Drawing detected circles
 
