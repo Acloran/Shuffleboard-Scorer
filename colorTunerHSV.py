@@ -8,12 +8,12 @@ cam = cv2.imread('images/c1.png')
 def callback(x):
     global H_low,H_high,S_low,S_high,V_low,V_high
 	#assign trackbar position value to H,S,V High and low variable
-    B_low = cv2.getTrackbarPos('low H','controls')
-    B_high = cv2.getTrackbarPos('high H','controls')
-    G_low = cv2.getTrackbarPos('low S','controls')
-    G_high = cv2.getTrackbarPos('high S','controls')
-    R_low = cv2.getTrackbarPos('low V','controls')
-    R_high = cv2.getTrackbarPos('high V','controls')
+    H_low = cv2.getTrackbarPos('low H','controls')
+    H_high = cv2.getTrackbarPos('high H','controls')
+    S_low = cv2.getTrackbarPos('low S','controls')
+    S_high = cv2.getTrackbarPos('high S','controls')
+    V_low = cv2.getTrackbarPos('low V','controls')
+    V_high = cv2.getTrackbarPos('high V','controls')
 
 
 
