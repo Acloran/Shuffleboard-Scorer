@@ -117,7 +117,7 @@ while True:
     #closing = cv2.erode(closing,kernel2,iterations = 1)
     cv2.imshow('blue',closing)  
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1,2,
+    bluecircles = cv2.HoughCircles(hsv,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
