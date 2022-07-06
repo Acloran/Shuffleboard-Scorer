@@ -110,7 +110,7 @@ while True:
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
     blueMask = cv2.medianBlur(blueMask,7)
 
-    kernel = np.ones((3,3),np.uint8)
+    kernel = np.ones((9,9),np.uint8)
     kernel2 = np.ones((3,3),np.uint8)
 
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
