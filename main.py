@@ -126,7 +126,7 @@ while True:
 
     #Drawing detected circles
     redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
-                            param1=50,param2=20,minRadius=10,maxRadius=0)
+                            param1=50,param2=20,minRadius=4,maxRadius=0)
     if redcircles is not None:
         redcircles = np.uint16(np.around(redcircles))
         #print(redcircles)
