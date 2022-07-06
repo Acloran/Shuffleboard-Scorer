@@ -118,7 +118,7 @@ while True:
     cv2.imshow('blue',closing)  
     #Drawing detected circles
     bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
-                            param1=40,param2=20,minRadius=12,maxRadius=0)
+                            param1=30,param2=15,minRadius=12,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
     #print(circles)
