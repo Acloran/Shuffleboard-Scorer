@@ -85,7 +85,7 @@ while True:
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    blueMask = cv2.medianBlur(blueMask,5)
+    blueMask = cv2.medianBlur(blueMask,7)
 
     #Drawing detected circles
     # bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,2,
