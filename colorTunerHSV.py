@@ -51,11 +51,11 @@ while True:
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
     dst = cv2.warpPerspective(og,M,(620,300))
-    cv2.imshow('raw',dst) 
+    
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
+    cv2.imshow('hsv',hsv) 
     blue_bgr_low = np.array([H_low, S_low, V_low], np.uint8)
     blue_bgr_high = np.array([H_high, S_high, V_high], np.uint8)
 
