@@ -101,8 +101,9 @@ while True:
     #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
     kernel = np.ones((5,5),np.uint8)
+    kernel2 = np.ones((3,3),np.uint8)
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    #closing = cv2.erode(closing,kernel,iterations = 1)
+    closing = cv2.erode(closing,kernel2,iterations = 1)
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
     cv2.imshow('blue',closing)  
