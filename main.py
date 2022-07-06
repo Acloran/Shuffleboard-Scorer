@@ -85,7 +85,7 @@ while True:
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    blueMask = cv2.GaussianBlur(blueMask,(5,5),0)
+    blueMask = cv2.medianBlur(blueMask,7)
 
     #Drawing detected circles
     # bluecircles = cv2.HoughCircles(blueMask,cv2.HOUGH_GRADIENT,1,2,
@@ -102,10 +102,13 @@ while True:
     
     kernel = np.ones((5,5),np.uint8)
     kernel2 = np.ones((3,3),np.uint8)
+
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     closing = cv2.erode(closing,kernel2,iterations = 1)
+
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
+
     cv2.imshow('blue',closing)  
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
@@ -125,6 +128,7 @@ while True:
 	
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
     redMask = cv2.medianBlur(redMask,5)
+    redMask = cv2.morphologyEx(redMask, cv2.MORPH_CLOSE, kernel)
 
     #Drawing detected circles
     redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
