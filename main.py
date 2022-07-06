@@ -187,6 +187,9 @@ while True:
     #cv2.imshow('Camera', frame)
 
     if cv2.waitKey(1) == ord('q'):
+        while True:
+            if cv2.waitKey(1) == ord('x'):
+                break
         break
 cam.release()
 cv2.destroyAllWindows()
