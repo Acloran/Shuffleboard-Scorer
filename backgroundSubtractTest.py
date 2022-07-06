@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import keyboard
 
-backgroundimg = cv2.imread('images/c1.png')
+backgroundimg = cv2.imread('images/warpedbackground.png')
 
 cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
@@ -26,7 +26,9 @@ while True:
 
     dst = cv2.warpPerspective(og,M,(620,300))
 
-    fgmask1 = fgbg1.apply(dst)
+    result = cv2.subtract(dst,backgroundimg)
+
+    #fgmask1 = fgbg1.apply(dst)
 
     # cv2.imshow('raw',dst) 
     # #recolor Image
@@ -39,7 +41,7 @@ while True:
 	
     #blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
 
-    cv2.imshow('masked img', fgmask1)
+    cv2.imshow('masked img', result)
 
     if cv2.waitKey(1) == ord('q'):
         break
