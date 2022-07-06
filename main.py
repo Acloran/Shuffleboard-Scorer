@@ -70,7 +70,7 @@ while True:
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
     dst = cv2.warpPerspective(og,M,(620,300))
-    
+    cv2.imshow('raw',dst) 
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
