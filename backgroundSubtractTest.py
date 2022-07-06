@@ -26,7 +26,14 @@ while True:
 
     dst = cv2.warpPerspective(og,M,(620,300))
 
-    result = cv2.subtract(dst,backgroundimg)
+    difference = cv2.subtract(dst,backgroundimg)
+
+    grayDifference = cv2.cvtColor(difference, cv2.COLOR_BRG2GRAY)
+
+    bgr_low = np.array([0, 0, 107], np.uint8)
+    bgr_high = np.array([175, 255, 255], np.uint8)
+
+    final = cv2.inRange(grayDifference, 1, 255)
 
     #fgmask1 = fgbg1.apply(dst)
 
