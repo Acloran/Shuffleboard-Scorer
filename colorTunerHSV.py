@@ -54,7 +54,7 @@ while True:
     
     #recolor Image
     frame = cv2.bitwise_not(dst)
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2HSV)
     cv2.imshow('hsv',hsv) 
     blue_bgr_low = np.array([H_low, S_low, V_low], np.uint8)
     blue_bgr_high = np.array([H_high, S_high, V_high], np.uint8)
