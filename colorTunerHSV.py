@@ -61,7 +61,10 @@ while True:
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     xyz = cv2.cvtColor(img, cv2.COLOR_BGR2XYZ)
     YCrCb = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     cv2.imshow('raw',img)
+
+    cv2.imshow('gray',gray)
 
     cv2.imshow('hsv',hsv)
 
