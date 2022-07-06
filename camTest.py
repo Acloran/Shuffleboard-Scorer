@@ -6,7 +6,7 @@ import keyboard
 cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)  # set new dimensionns to cam object (not cap)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1536)
 
 while True:
     ret, img = cam.read()
