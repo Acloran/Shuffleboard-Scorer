@@ -98,7 +98,7 @@ while True:
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    gray = cv2.cvtColor(dst, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(hsv, cv2.COLOR_BGR2GRAY)
     #Making the Mask for Blue Pucks
     #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
