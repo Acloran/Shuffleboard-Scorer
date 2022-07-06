@@ -113,7 +113,7 @@ while True:
         if radius>10 and radius<25:
             cv2.circle(outputImg,center,18,(255,0,0),2)
             # draw the center of the circle
-            cv2.circle(outputImg,center,5,(255,255,255),-1)
+            cv2.circle(outputImg,center,6,(255,0,0),-1)
 
     #making the red mask
 
