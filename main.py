@@ -101,7 +101,7 @@ while True:
     
     kernel = np.ones((5,5),np.uint8)
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-
+    closing = cv2.erode(closing,kernel,iterations = 1)
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, 1, 2) 
     cv2.imshow('blue',closing)  
