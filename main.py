@@ -103,8 +103,8 @@ while True:
     bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    blue_bgr_low = np.array([0, 0, 107], np.uint8)
-    blue_bgr_high = np.array([175, 255, 255], np.uint8)
+    blue_bgr_low = np.array([24, 0, 27], np.uint8)
+    blue_bgr_high = np.array([148, 52, 145], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
@@ -116,39 +116,39 @@ while True:
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     #closing = cv2.erode(closing,kernel2,iterations = 1)
     cv2.imshow('blue',closing)  
-    #Drawing detected circles
+    # #Drawing detected circles
 
-    v = np.mean(closing)
-    print(v)
-    param1 = int(min(255, (1.0+.6) * v))
+    # v = np.mean(closing)
+    # print(v)
+    # param1 = int(min(255, (1.0+.6) * v))
 
-    bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
-                            param1=30,param2=20,minRadius=12,maxRadius=25)
-    if bluecircles is not None:
-        bluecircles = np.uint16(np.around(bluecircles))
-    #print(circles)
+    # bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
+    #                         param1=30,param2=20,minRadius=12,maxRadius=25)
+    # if bluecircles is not None:
+    #     bluecircles = np.uint16(np.around(bluecircles))
+    # #print(circles)
 
-        for i in bluecircles[0,:]:
-            # draw the outer circle
-            cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
-            # draw the center of the circle
-            cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
-    
-    
-
-    # ret,thresh = cv2.threshold(closing,127,255,0)
-    # contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
-
-    # cv2.imshow('blue',closing)  
-    # for i in contours[:]:
-    #     (x,y),radius = cv2.minEnclosingCircle(i)
-    #     center = (int(x),int(y))
-    #     radius = int(radius)
-    #     #cv2.circle(img,center,radius,(0,255,0),2)
-    #     if radius>10 and radius<25:
-    #         cv2.circle(outputImg,center,18,(255,0,0),2)
+    #     for i in bluecircles[0,:]:
+    #         # draw the outer circle
+    #         cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
     #         # draw the center of the circle
-    #         cv2.circle(outputImg,center,6,(255,0,0),-1)
+    #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
+    
+    
+
+    ret,thresh = cv2.threshold(closing,127,255,0)
+    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
+
+    cv2.imshow('blue',closing)  
+    for i in contours[:]:
+        (x,y),radius = cv2.minEnclosingCircle(i)
+        center = (int(x),int(y))
+        radius = int(radius)
+        #cv2.circle(img,center,radius,(0,255,0),2)
+        if radius>10 and radius<25:
+            cv2.circle(outputImg,center,18,(255,0,0),2)
+            # draw the center of the circle
+            cv2.circle(outputImg,center,6,(255,0,0),-1)
 
     #making the red mask
 
