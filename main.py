@@ -119,7 +119,7 @@ while True:
     #Drawing detected circles
 
     v = np.mean(closing)
-
+    print(v)
     param1 = int(min(255, (1.0+.33) * v))
 
     bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
