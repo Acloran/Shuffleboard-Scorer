@@ -110,7 +110,7 @@ while True:
         center = (int(x),int(y))
         radius = int(radius)
         #cv2.circle(img,center,radius,(0,255,0),2)
-        cv2.circle(outputImg,center,18,(255,0,0),2)
+        cv2.circle(outputImg,center,radius,(255,0,0),2)
         # draw the center of the circle
         cv2.circle(outputImg,center,2,(255,0,0),3)
 
