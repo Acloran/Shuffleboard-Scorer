@@ -100,7 +100,7 @@ while True:
     #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
     kernel = np.ones((3,3),np.uint8)
-    closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
+    #closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     #closing = cv2.erode(closing,kernel,iterations = 1)
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, 1, 2) 
@@ -110,9 +110,10 @@ while True:
         center = (int(x),int(y))
         radius = int(radius)
         #cv2.circle(img,center,radius,(0,255,0),2)
-        cv2.circle(outputImg,center,radius,(255,0,0),2)
-        # draw the center of the circle
-        cv2.circle(outputImg,center,2,(255,0,0),3)
+        if radius>10:
+            cv2.circle(outputImg,center,radius,(255,0,0),2)
+            # draw the center of the circle
+            cv2.circle(outputImg,center,2,(255,0,0),3)
 
     #making the red mask
 
