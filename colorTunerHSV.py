@@ -57,7 +57,7 @@ while True:
     
     #recolor Image
     frame = cv2.bitwise_not(dst)
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
     cv2.imshow('raw',dst)
     cv2.imshow('hsv',hsv) 
     cv2.imshow('inverted',frame)
