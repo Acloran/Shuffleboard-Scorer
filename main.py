@@ -99,7 +99,7 @@ while True:
     #         # draw the center of the circle
     #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
-    kernel = np.ones((5,5),np.uint8)
+    kernel = np.ones((7,7),np.uint8)
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
 
     ret,thresh = cv2.threshold(closing,127,255,0)
