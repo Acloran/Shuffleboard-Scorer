@@ -123,7 +123,7 @@ while True:
 	
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
     redMask = cv2.medianBlur(redMask,5)
-
+    
     #Drawing detected circles
     redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
