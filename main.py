@@ -120,7 +120,7 @@ while True:
 
     v = np.mean(closing)
     print(v)
-    param1 = int(min(255, (1.0+.33) * v))
+    param1 = int(min(255, (1.0+.6) * v))
 
     bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
                             param1=param1,param2=18,minRadius=12,maxRadius=0)
