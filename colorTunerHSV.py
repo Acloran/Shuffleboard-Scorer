@@ -1,5 +1,5 @@
 from doctest import OutputChecker
-import numpy as np 
+import numpy as np
 import cv2
 import keyboard
 
@@ -32,7 +32,7 @@ V_low= 0
 V_high = 255
 
 
-#create trackbars for high,low H,S,V 
+#create trackbars for high,low H,S,V
 cv2.createTrackbar('low H','controls',0,179,callback)
 cv2.createTrackbar('high H','controls',179,179,callback)
 
@@ -47,39 +47,54 @@ cv2.createTrackbar('high V','controls',255,255,callback)
 while True:
 
     ret, og = cam.read()
-    
+
     pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
     pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
 
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
-    dst = cv2.warpPerspective(og,M,(620,300))
-    
+    img = cv2.warpPerspective(og,M,(620,300))
+
     #recolor Image
-    frame = cv2.bitwise_not(dst)
-    hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2LAB)
-    cv2.imshow('raw',dst)
-    cv2.imshow('hsv',hsv) 
-    cv2.imshow('inverted',frame)
-    blue_bgr_low = np.array([H_low, S_low, V_low], np.uint8)
-    blue_bgr_high = np.array([H_high, S_high, V_high], np.uint8)
+    inverted = cv2.bitwise_not(img)
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+    xyz = cv2.cvtColor(img, cv2.COLOR_BGR2XYZ)
+    YCrCb = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+    cv2.imshow('raw',img)
 
-	
-    mask = cv2.inRange(hsv, blue_bgr_low, blue_bgr_high)
+    cv2.imshow('hsv',hsv)
 
+    cv2.imshow('lab',lab)
 
-    median = cv2.medianBlur(mask,7)
+    cv2.imshow('xyz',xyz)
 
-    kernel = np.ones((5,5),np.uint8)
-    kernel2 = np.ones((3,3),np.uint8)
+    cv2.imshow('YCrCb',YCrCb)
 
-    closed = cv2.morphologyEx(median, cv2.MORPH_CLOSE, kernel)
-    eroded = cv2.erode(closed,kernel2,iterations = 1)
-
-    
+    cv2.imshow('inverted',inverted)
 
 
-    cv2.imshow('masked img', eroded)
+
+
+    # blue_bgr_low = np.array([H_low, S_low, V_low], np.uint8)
+    # blue_bgr_high = np.array([H_high, S_high, V_high], np.uint8)
+
+
+    # mask = cv2.inRange(hsv, blue_bgr_low, blue_bgr_high)
+
+
+    # median = cv2.medianBlur(mask,7)
+
+    # kernel = np.ones((5,5),np.uint8)
+    # kernel2 = np.ones((3,3),np.uint8)
+
+    # closed = cv2.morphologyEx(median, cv2.MORPH_CLOSE, kernel)
+    # eroded = cv2.erode(closed,kernel2,iterations = 1)
+
+
+
+
+    #cv2.imshow('masked img', eroded)
 
     if cv2.waitKey(1) == ord('q'):
         break
