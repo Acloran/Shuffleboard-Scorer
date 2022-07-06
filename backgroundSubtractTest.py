@@ -28,7 +28,7 @@ while True:
 
     difference = cv2.subtract(dst,backgroundimg)
 
-    grayDifference = cv2.cvtColor(difference, cv2.COLOR_BRG2GRAY)
+    grayDifference = cv2.cvtColor(difference, cv2.COLOR_BGR2GRAY)
 
     bgr_low = np.array([0, 0, 107], np.uint8)
     bgr_high = np.array([175, 255, 255], np.uint8)
