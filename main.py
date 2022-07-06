@@ -79,8 +79,8 @@ while True:
     #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    blue_bgr_low = np.array([0, 156, 137], np.uint8)
-    blue_bgr_high = np.array([160, 255, 255], np.uint8)
+    blue_bgr_low = np.array([0, 0, 107], np.uint8)
+    blue_bgr_high = np.array([175, 220, 255], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
@@ -123,7 +123,7 @@ while True:
 	
     redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
     redMask = cv2.medianBlur(redMask,5)
-    
+
     #Drawing detected circles
     redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,2,
                             param1=50,param2=20,minRadius=4,maxRadius=0)
