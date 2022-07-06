@@ -111,7 +111,7 @@ while True:
     blueMask = cv2.medianBlur(blueMask,7)
 
     kernel = np.ones((7,7),np.uint8)
-    kernel2 = np.ones((9,9),np.uint8)
+    kernel2 = np.ones((5,5),np.uint8)
 
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
     #closing = cv2.erode(closing,kernel2,iterations = 1)
@@ -123,7 +123,7 @@ while True:
     param1 = int(min(255, (1.0+.6) * v))
 
     bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
-                            param1=param1,param2=18,minRadius=12,maxRadius=0)
+                            param1=30,param2=18,minRadius=12,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
     #print(circles)
