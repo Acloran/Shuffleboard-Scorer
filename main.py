@@ -103,22 +103,22 @@ while True:
     #bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     #bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    blue_bgr_low = np.array([0, 0, 107], np.uint8)
-    blue_bgr_high = np.array([175, 255, 255], np.uint8)
+    # blue_bgr_low = np.array([0, 0, 107], np.uint8)
+    # blue_bgr_high = np.array([175, 255, 255], np.uint8)
 
 	
-    blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    blueMask = cv2.medianBlur(blueMask,7)
+    # blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
+    # blueMask = cv2.medianBlur(blueMask,7)
 
-    kernel = np.ones((5,5),np.uint8)
-    kernel2 = np.ones((3,3),np.uint8)
+    # kernel = np.ones((5,5),np.uint8)
+    # kernel2 = np.ones((3,3),np.uint8)
 
-    closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    #closing = cv2.erode(closing,kernel2,iterations = 1)
-    cv2.imshow('blue',closing)  
+    # closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
+    # #closing = cv2.erode(closing,kernel2,iterations = 1)
+    # cv2.imshow('blue',closing)  
     #Drawing detected circles
-    bluecircles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,2,
-                            param1=50,param2=20,minRadius=4,maxRadius=0)
+    bluecircles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,12,
+                            param1=60,param2=40,minRadius=12,maxRadius=0)
     if bluecircles is not None:
         bluecircles = np.uint16(np.around(bluecircles))
     #print(circles)
@@ -147,27 +147,27 @@ while True:
 
     #making the red mask
 
-    red_bgr_low = np.array([0, 166, 0], np.uint8)
-    red_bgr_high = np.array([255, 255, 102], np.uint8)
+    # red_bgr_low = np.array([0, 166, 0], np.uint8)
+    # red_bgr_high = np.array([255, 255, 102], np.uint8)
 
 	
-    redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
-    redMask = cv2.medianBlur(redMask,5)
-    redMask = cv2.morphologyEx(redMask, cv2.MORPH_CLOSE, kernel)
-    redMask = cv2.erode(redMask,kernel2,iterations = 1)
+    # redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
+    # redMask = cv2.medianBlur(redMask,5)
+    # redMask = cv2.morphologyEx(redMask, cv2.MORPH_CLOSE, kernel)
+    # redMask = cv2.erode(redMask,kernel2,iterations = 1)
 
-    #Drawing detected circles
-    redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,10,
-                            param1=50,param2=20,minRadius=4,maxRadius=0)
-    if redcircles is not None:
-        redcircles = np.uint16(np.around(redcircles))
-        #print(redcircles)
-        for i in redcircles[0,:]:
-            # draw the outer circle
-            cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
-            # draw the center of the circle
-            cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
-    cv2.imshow('red',redMask)
+    # #Drawing detected circles
+    # redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,10,
+    #                         param1=50,param2=20,minRadius=4,maxRadius=0)
+    # if redcircles is not None:
+    #     redcircles = np.uint16(np.around(redcircles))
+    #     #print(redcircles)
+    #     for i in redcircles[0,:]:
+    #         # draw the outer circle
+    #         cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
+    #         # draw the center of the circle
+    #         cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
+    # cv2.imshow('red',redMask)
 
 
 
