@@ -103,8 +103,8 @@ while True:
     bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    blue_bgr_low = np.array([56, 0, 65], np.uint8)
-    blue_bgr_high = np.array([184, 114, 196], np.uint8)
+    blue_bgr_low = np.array([50, 0, 82], np.uint8)
+    blue_bgr_high = np.array([210, 128, 255], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
