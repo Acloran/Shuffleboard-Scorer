@@ -44,6 +44,25 @@ cv2.createTrackbar('high G','controls',255,255,callback)
 cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
+def drawRedorBlueCircle(imgin, imgout, x, y):
+    #colormask = np.zeros((300,620,3), np.uint8)
+    #cv2.circle(colormask,center,12,(255,255,255),12)
+    puckBox = imgin[x-20:x+20, y-20:y+20]
+    b = puckBox[:,:,0]
+    blueVal = np.mean(b)
+    if blueVal > 50:
+        circleColor = (255,0,0)
+    else:
+        circleColor = (0,0,255)
+    # img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
+    # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+    # result = cv2.bitwise_and(imgin, imgin, mask=mask)
+
+    cv2.circle(imgout,center,18,circleColor,2)
+    # draw the center of the circle
+    cv2.circle(imgout,center,6,circleColor,-1)
+    return
+
 def findAndDrawCircles(img, bgr_low, bgr_high):
 	
     mask = cv2.inRange(img, bgr_low, bgr_high)
@@ -146,9 +165,10 @@ while True:
         radius = int(radius)
         #cv2.circle(img,center,radius,(0,255,0),2)
         if radius>3 and radius<15:
-            cv2.circle(outputImg,center,18,(255,0,0),2)
+            drawRedorBlueCircle(frame, outputImg, x, y)
+            #cv2.circle(outputImg,center,18,(255,0,0),2)
             # draw the center of the circle
-            cv2.circle(outputImg,center,6,(255,0,0),-1)
+            #cv2.circle(outputImg,center,6,(255,0,0),-1)
 
     #making the red mask
 
