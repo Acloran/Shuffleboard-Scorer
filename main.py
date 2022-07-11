@@ -50,14 +50,15 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     puckBox = imgin[int(x)-20:int(x)+20, int(y)-20:int(y)+20]
     b = puckBox[:,:,0]
     blueVal = np.mean(b)
-    if blueVal > 90:
-        circleColor = (255,0,0)
-    else:
-        circleColor = (0,0,255)
+    # if blueVal > 90:
+    #     circleColor = (255,0,0)
+    # else:
+    #     circleColor = (0,0,255)
     # img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
     # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
     # result = cv2.bitwise_and(imgin, imgin, mask=mask)
-
+    circleColor = (255,255,255)
+    cv2.putText(imgout, int(blueVal), (int(x)+22,int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,center,6,circleColor,-1)
