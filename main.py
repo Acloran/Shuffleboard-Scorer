@@ -47,22 +47,25 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 def drawRedorBlueCircle(imgin, imgout, x, y):
     #colormask = np.zeros((300,620,3), np.uint8)
     #cv2.circle(colormask,center,12,(255,255,255),12)
-    puckBox = imgin[100-20:100+20, 100-20:100+20]
-    cv2.imshow('puck',puckBox)
+
+    xVal = int(x)
+    yVal = int(y)
+    puckBox = imgin[xVal-20:xVal+20, yVal-20:yVal+20]
+    
     b = puckBox[:,:,0]
     
     blueVal = np.average(b, axis=None, weights=None, returned=False)
-    # if blueVal > 90:
-    #     circleColor = (255,0,0)
-    # else:
-    #     circleColor = (0,0,255)
-    # img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
-    # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
-    # result = cv2.bitwise_and(imgin, imgin, mask=mask)
-    circleColor = (255,255,255)
+    if blueVal > 90:
+        circleColor = (255,0,0)
+    else:
+        circleColor = (0,0,255)
+    img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
+    ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+    result = cv2.bitwise_and(imgin, imgin, mask=mask)
+    #circleColor = (255,255,255)
     strBlueVal = str(blueVal)
-    print(blueVal)
-    cv2.putText(imgout, strBlueVal, (int(x)+22,int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
+    
+    cv2.putText(imgout, strBlueVal, (xVal+22,yVal), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,center,6,circleColor,-1)
@@ -170,7 +173,7 @@ while True:
         radius = int(radius)
         #cv2.circle(img,center,radius,(0,255,0),2)
         if radius>3 and radius<15:
-            drawRedorBlueCircle(frame, outputImg, x, y)
+            drawRedorBlueCircle(dst, outputImg, x, y)
             #cv2.circle(outputImg,center,18,(255,0,0),2)
             # draw the center of the circle
             #cv2.circle(outputImg,center,6,(255,0,0),-1)
