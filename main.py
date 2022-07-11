@@ -50,7 +50,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     puckBox = imgin[int(x)-20:int(x)+20, int(y)-20:int(y)+20]
     b = puckBox[:,:,0]
     blueVal = np.mean(b)
-    if blueVal > 50:
+    if blueVal > 90:
         circleColor = (255,0,0)
     else:
         circleColor = (0,0,255)
