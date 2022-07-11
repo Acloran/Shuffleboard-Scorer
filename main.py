@@ -59,6 +59,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     # result = cv2.bitwise_and(imgin, imgin, mask=mask)
     circleColor = (255,255,255)
     strBlueVal = str(blueVal)
+    print(blueVal)
     cv2.putText(imgout, strBlueVal, (int(x)+22,int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
