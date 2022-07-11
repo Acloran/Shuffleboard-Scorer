@@ -47,7 +47,7 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 def drawRedorBlueCircle(imgin, imgout, x, y):
     #colormask = np.zeros((300,620,3), np.uint8)
     #cv2.circle(colormask,center,12,(255,255,255),12)
-    puckBox = imgin[int(x)-20:int(x)+20, int(y)-20:int(y)+20]
+    puckBox = imgin[100-20:100+20, 100-20:100+20]
     cv2.imshow('puck',puckBox)
     b = puckBox[:,:,0]
     
