@@ -71,7 +71,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,center,6,circleColor,-1)
-    return
+    
 
 def findAndDrawCircles(img, bgr_low, bgr_high):
 	
