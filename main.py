@@ -51,7 +51,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     xVal = int(x)
     yVal = int(y)
     
-    puckBox = imgin[xVal-20:xVal+20, yVal-20:yVal+20]
+    puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
     
     b = puckBox[:,:,0]
     
