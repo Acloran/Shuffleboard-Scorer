@@ -59,9 +59,9 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
         circleColor = (255,0,0)
     else:
         circleColor = (0,0,255)
-    img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
-    ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
-    result = cv2.bitwise_and(imgin, imgin, mask=mask)
+    # img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
+    # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
+    # result = cv2.bitwise_and(imgin, imgin, mask=mask)
     #circleColor = (255,255,255)
     strBlueVal = str(blueVal)
     
