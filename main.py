@@ -164,11 +164,11 @@ while True:
             
             if obj.getXVal()>maximum.getXVal():
                 maximum = obj
-        sortedPuckPos.append(obj)
+        sortedPuckPos.append(maximum)
         puckPos.remove(obj)
                 
                 
-
+    
     for obj in sortedPuckPos:
         if obj.getIsBlue():
             print('Blue puck at ' + str(obj.getXVal()))
