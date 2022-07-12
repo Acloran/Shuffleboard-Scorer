@@ -10,39 +10,6 @@ cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
 #cam = cv2.imread('images/c1.png')
 
-def callback(x):
-    global B_low,B_high,G_low,G_high,R_low,R_high
-	#assign trackbar position value to H,S,V High and low variable
-    B_low = cv2.getTrackbarPos('low B','controls')
-    B_high = cv2.getTrackbarPos('high B','controls')
-    G_low = cv2.getTrackbarPos('low G','controls')
-    G_high = cv2.getTrackbarPos('high G','controls')
-    R_low = cv2.getTrackbarPos('low R','controls')
-    R_high = cv2.getTrackbarPos('high R','controls')
-
-
-
-
-cv2.namedWindow('controls',2)
-cv2.resizeWindow("controls", 550,10)
-
-B_low = 0
-B_high = 255
-G_low= 0
-G_high = 255
-R_low= 0
-R_high = 255
-
-
-#create trackbars for high,low H,S,V 
-cv2.createTrackbar('low B','controls',0,255,callback)
-cv2.createTrackbar('high B','controls',255,255,callback)
-
-cv2.createTrackbar('low G','controls',0,255,callback)
-cv2.createTrackbar('high G','controls',255,255,callback)
-
-cv2.createTrackbar('low R','controls',0,255,callback)
-cv2.createTrackbar('high R','controls',255,255,callback)
 
 def drawRedorBlueCircle(imgin, imgout, x, y):
     xVal = int(x)
