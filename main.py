@@ -136,13 +136,12 @@ while True:
         radius = int(radius)
        
         if radius>4 and radius<15:
-            p1 = Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y))
-            puckPos.append(p1)
+            puckPos.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y)))
 
             
     cv2.imshow('result',outputImg)
-    for a in puckPos:
-        print(puckPos[a].getXVal())
+    for obj in puckPos:
+        print(obj.getXVal())
 
     if cv2.waitKey(400) == ord('q'):
         while True:
