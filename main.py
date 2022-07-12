@@ -50,14 +50,23 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     offset = 18
     xVal = int(x)
     yVal = int(y)
+    redTotal = 0
+    redTotal += imgin.item(xVal,yVal+10,2)
+    redTotal += imgin.item(xVal,yVal-10,2)
+    redTotal += imgin.item(xVal+10,yVal,2)
+    redTotal += imgin.item(xVal-10,yVal,2)
+    blueVal = redTotal/4
+
+    #puckBox = imgin[(xVal-offset):(xVal+offset), (yVal-offset):(yVal+offset)]
+    #cv2.rectangle(imgin, (xVal-offset, yVal-offset), (xVal+offset, yVal+offset), (0,255,0), 1)
+    #cv2.imshow('window',imgin)
+    #b = puckBox[:,:,2]
     
-    puckBox = imgin[(xVal-offset):(xVal+offset), (yVal-offset):(yVal+offset)]
-    cv2.rectangle(imgin, (xVal-offset, yVal-offset), (xVal+offset, yVal+offset), (0,255,0), 1)
-    cv2.imshow('window',imgin)
-    b = puckBox[:,:,2]
-    
-    blueVal = np.mean(b, axis=None)
+    #blueVal = np.mean(b, axis=None)
     #print(blueVal)
+
+
+
     if blueVal < 230:
         circleColor = (255,0,0)
     else:
