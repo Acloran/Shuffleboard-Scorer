@@ -34,7 +34,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
         circleColor = (0,0,255)
         isBlue = False
 
-    #cv2.putText(imgout, strRedVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
+    cv2.putText(imgout, str(xVal), (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 1, cv2.LINE_AA)
     cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
