@@ -46,7 +46,7 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 
 def drawRedorBlueCircle(imgin, imgout, x, y):
     colormask = np.zeros((300,620,1), np.uint8)
-    cv2.circle(colormask,center,12,(255),12)
+    cv2.circle(colormask,center,13,(255),10)
     offset = 18
     xVal = int(x)
     yVal = int(y)
