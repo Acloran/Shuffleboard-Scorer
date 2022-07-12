@@ -145,7 +145,7 @@ while True:
         pucks.remove(maximum)
                 
     scoringPucks = []
-    if sortedPucks.len() > 0:        
+    if len(sortedPucks) > 0:        
         scoreIsBlue = sortedPucks[0].getIsBlue()
         runningScore = 0
         for obj in sortedPucks:
