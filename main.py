@@ -52,7 +52,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     yVal = 50
     
     puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
-    cv2.rectangle(imgin, (xVal-20, xVal+20), (yVal-20, yVal+20), (0,255,0), 3)
+    cv2.rectangle(imgin, (xVal-20, yVal-20), (xVal+20, yVal+20), (0,255,0), 3)
     cv2.imshow('window',imgin)
     b = puckBox[:,:,0]
     
