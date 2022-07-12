@@ -45,17 +45,17 @@ cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
 def drawRedorBlueCircle(imgin, imgout, x, y):
-    #colormask = np.zeros((300,620,3), np.uint8)
-    #cv2.circle(colormask,center,12,(255,255,255),12)
+    colormask = np.zeros((300,620,1), np.uint8)
+    cv2.circle(colormask,center,12,(255),12)
     offset = 18
     xVal = int(x)
     yVal = int(y)
-    redTotal = 0
-    redTotal += imgin.item(xVal,yVal+10,2)
-    redTotal += imgin.item(xVal,yVal-10,2)
-    redTotal += imgin.item(xVal+10,yVal,2)
-    redTotal += imgin.item(xVal-10,yVal,2)
-    blueVal = redTotal/4
+    # redTotal = 0
+    # redTotal += imgin.item(xVal,yVal+10,2)
+    # redTotal += imgin.item(xVal,yVal-10,2)
+    # redTotal += imgin.item(xVal+10,yVal,2)
+    # redTotal += imgin.item(xVal-10,yVal,2)
+    # blueVal = redTotal/4
 
     #puckBox = imgin[(xVal-offset):(xVal+offset), (yVal-offset):(yVal+offset)]
     #cv2.rectangle(imgin, (xVal-offset, yVal-offset), (xVal+offset, yVal+offset), (0,255,0), 1)
@@ -71,9 +71,11 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
         circleColor = (255,0,0)
     else:
         circleColor = (0,0,255)
-    # img2gray = cv2.cvtColor(result,cv2.COLOR_BGR2GRAY)
-    # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
-    # result = cv2.bitwise_and(imgin, imgin, mask=mask)
+
+    #img2gray = cv2.cvtColor(imgin,cv2.COLOR_BGR2GRAY)
+    ret, mask = cv2.threshold(colormask, 10, 255, cv2.THRESH_BINARY)
+    result = cv2.bitwise_and(imgin, imgin, mask=mask)
+    cv2.imshow('reaultofmask', result)
     #circleColor = (255,255,255)
     blueVal = round(blueVal, 1)
     strBlueVal = str(blueVal)
