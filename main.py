@@ -52,7 +52,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     yVal = 50
     
     puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
-    
+    cv2.imshow('window',puckBox)
     b = puckBox[:,:,0]
     
     blueVal = np.average(b, axis=None, weights=None, returned=False)
