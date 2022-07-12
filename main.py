@@ -165,6 +165,7 @@ while True:
                 maximum = obj
                 sortedPuckPos.append(obj)
                 puckPos.remove(obj)
+                print('passed')
                 
 
     for obj in sortedPuckPos:
