@@ -48,8 +48,8 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     #colormask = np.zeros((300,620,3), np.uint8)
     #cv2.circle(colormask,center,12,(255,255,255),12)
 
-    xVal = 350
-    yVal = 50
+    xVal = int(x)
+    yVal = int(y)
     
     puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
     cv2.rectangle(imgin, (xVal-20, yVal-20), (xVal+20, yVal+20), (0,255,0), 3)
