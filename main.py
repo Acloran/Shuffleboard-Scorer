@@ -77,7 +77,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     result = cv2.bitwise_and(imgin, imgin, mask=mask)
     r = result[:,:,2]
 
-    data = np.genfromtxt('data')
+    data = r
     data[data == 0] = np.nan
     means = np.nanmean(data)
 
