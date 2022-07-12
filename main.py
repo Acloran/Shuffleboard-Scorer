@@ -78,7 +78,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     r = result[:,:,2]
 
     data = np.nonzero(r)
-    cv2.imshow('data',data)
+    #cv2.imshow('data',data)
     print(data)
     means = np.mean(data, axis=None)
 
