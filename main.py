@@ -141,7 +141,8 @@ while True:
 
             
     cv2.imshow('result',outputImg)
-    print(puckPos)
+    for a in puckPos:
+        print(puckPos[a].getXVal())
 
     if cv2.waitKey(400) == ord('q'):
         while True:
