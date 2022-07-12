@@ -54,7 +54,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
     cv2.rectangle(imgin, (xVal-20, yVal-20), (xVal+20, yVal+20), (0,255,0), 3)
     cv2.imshow('window',imgin)
-    b = puckBox[:,:,0]
+    b = puckBox[:,:,1]
     
     blueVal = np.average(b, axis=None, weights=None, returned=False)
     print(blueVal)
@@ -66,6 +66,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     # ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY)
     # result = cv2.bitwise_and(imgin, imgin, mask=mask)
     #circleColor = (255,255,255)
+    blueVal = round(blueVal, 1)
     strBlueVal = str(blueVal)
     
     cv2.putText(imgout, strBlueVal, (xVal+22,yVal), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
@@ -217,7 +218,7 @@ while True:
 
     #cv2.imshow('Camera', frame)
 
-    if cv2.waitKey(200) == ord('q'):
+    if cv2.waitKey(400) == ord('q'):
         while True:
             if cv2.waitKey(1) == ord('x'):
                 break
