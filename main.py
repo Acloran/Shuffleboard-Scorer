@@ -142,7 +142,7 @@ while True:
         radius = int(radius)
        
         if radius>4 and radius<15:
-            if x>600:
+            if x>580:
                 score = 4
             elif x>518:
                 score = 3
