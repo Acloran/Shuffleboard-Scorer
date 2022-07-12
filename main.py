@@ -75,10 +75,15 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     #img2gray = cv2.cvtColor(imgin,cv2.COLOR_BGR2GRAY)
     ret, mask = cv2.threshold(colormask, 10, 255, cv2.THRESH_BINARY)
     result = cv2.bitwise_and(imgin, imgin, mask=mask)
-    b = result[:,:,0]
-    cv2.imshow('redpixels', b)
+    r = result[:,:,2]
+
+    data = np.genfromtxt('data')
+    data[data == 0] = np.nan
+    means = np.nanmean(data)
+
+    cv2.imshow('redpixels', r)
     #circleColor = (255,255,255)
-    blueVal = round(blueVal, 1)
+    blueVal = round(means, 1)
     strBlueVal = str(blueVal)
     
     cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
