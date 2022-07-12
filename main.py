@@ -115,7 +115,7 @@ while True:
         (x,y),radius = cv2.minEnclosingCircle(i)
         center = (int(x),int(y))
         radius = int(radius)
-       
+       #scoring breakdown
         if radius>4 and radius<15:
             if x>580:
                 score = 4
