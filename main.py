@@ -41,14 +41,18 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     return isBlue
     
 class Puck:
-    def __init__(self, xVal, isBlue):
+    def __init__(self, xVal, isBlue, idNum, scoreVal):
         self.isBlue = isBlue
         self.xVal = xVal
+        self.idNum = idNum
+        self.scoreVal = scoreVal
     
     def getXVal(self):
         return self.xVal
     def getIsBlue(self):
         return self.isBlue
+    def getIDNum(self):
+        return self.idNum
 
 def findAndDrawCircles(img, bgr_low, bgr_high):
 	
@@ -136,15 +140,29 @@ while True:
         radius = int(radius)
        
         if radius>4 and radius<15:
-            puckPos.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y)))
+            if x>600:
+                score = 4
+            elif x>518:
+                score = 3
+            elif x>412:
+                score = 2
+            elif x>20:
+                score = 1
+            else: 
+                score = 0
+
+            puckPos.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y),i,score))
 
             
     cv2.imshow('result',outputImg)
+
+    puckPos.sort()
+
     for obj in puckPos:
         if obj.getIsBlue():
-            print('Blue puck at' + str(obj.getXVal()))
+            print('Blue puck at ' + str(obj.getXVal()))
         else:
-            print('Red puck at' + str(obj.getXVal()))
+            print('Red puck at ' + str(obj.getXVal()))
         
 
     if cv2.waitKey(400) == ord('q'):
