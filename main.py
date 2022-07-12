@@ -29,14 +29,26 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
 
     if redVal < 180:
         circleColor = (255,0,0)
+        isBlue = True
     else:
         circleColor = (0,0,255)
+        isBlue = False
 
     #cv2.putText(imgout, strRedVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
+    return isBlue
     
+class Puck:
+    def __init__(self, xVal, isBlue):
+        self.isBlue = isBlue
+        self.xVal = xVal
+    
+    def getXVal(self):
+        return self.xVal
+    def getIsBlue(self):
+        return self.isBlue
 
 def findAndDrawCircles(img, bgr_low, bgr_high):
 	
@@ -116,16 +128,20 @@ while True:
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
   
+    puckPos = []
+
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
         center = (int(x),int(y))
         radius = int(radius)
        
         if radius>4 and radius<15:
-            drawRedorBlueCircle(dst, outputImg, x, y)
+            p1 = Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y))
+            puckPos.append(p1)
+
             
     cv2.imshow('result',outputImg)
-
+    print(puckPos)
 
     if cv2.waitKey(400) == ord('q'):
         while True:
