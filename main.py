@@ -98,29 +98,24 @@ while True:
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     
-    #Making the Mask for Blue Pucks
-    bgr_low = np.array([B_low, G_low, R_low], np.uint8)
-    bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
-    blue_bgr_low = np.array([30, 0, 59], np.uint8)
-    blue_bgr_high = np.array([210, 135, 255], np.uint8)
+
+    bgr_low = np.array([30, 0, 59], np.uint8)
+    bgr_high = np.array([210, 135, 255], np.uint8)
 
 	
-    blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    blueMask = cv2.medianBlur(blueMask,7)
+    greenMask = cv2.inRange(frame, bgr_low, bgr_high)
+    greenMask = cv2.medianBlur(greenMask,7)
 
     kernel = np.ones((7,7),np.uint8)
     kernel2 = np.ones((5,5),np.uint8)
 
-    closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    #cv2.imshow('blue',closing)  
-    # #Drawing detected circles
-    
+    closing = cv2.morphologyEx(greenMask, cv2.MORPH_CLOSE, kernel)
+ 
     
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
-
-    #cv2.imshow('blue',closing)  
+  
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
         center = (int(x),int(y))
@@ -131,7 +126,6 @@ while True:
             
     cv2.imshow('result',outputImg)
 
-    #cv2.imshow('Camera', frame)
 
     if cv2.waitKey(400) == ord('q'):
         while True:
