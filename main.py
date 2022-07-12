@@ -158,13 +158,14 @@ while True:
 
     sortedPuckPos = []
 
-    while puckPos:
+    while len(puckPos)>0:
         maximum = puckPos[0]
         for obj in puckPos:
             if obj.getXVal()>maximum.getXVal():
                 maximum = obj
-                puckPos.remove(obj)
                 sortedPuckPos.append(obj)
+                puckPos.remove(obj)
+                
 
     for obj in sortedPuckPos:
         if obj.getIsBlue():
