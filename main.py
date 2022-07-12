@@ -141,7 +141,11 @@ while True:
             
     cv2.imshow('result',outputImg)
     for obj in puckPos:
-        print(obj.getXVal())
+        if obj.getIsBlue():
+            print('Blue puck at' + str(obj.getXVal()))
+        else:
+            print('Red puck at' + str(obj.getXVal()))
+        
 
     if cv2.waitKey(400) == ord('q'):
         while True:
