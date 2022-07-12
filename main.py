@@ -161,11 +161,12 @@ while True:
     while len(puckPos)>0:
         maximum = puckPos[0]
         for obj in puckPos:
+            print('passed')
             if obj.getXVal()>maximum.getXVal():
                 maximum = obj
                 sortedPuckPos.append(obj)
                 puckPos.remove(obj)
-                print('passed')
+                
                 
 
     for obj in sortedPuckPos:
