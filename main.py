@@ -165,7 +165,7 @@ while True:
             if obj.getXVal()>maximum.getXVal():
                 maximum = obj
         sortedPuckPos.append(maximum)
-        puckPos.remove(obj)
+        puckPos.remove(maximum)
                 
                 
     
