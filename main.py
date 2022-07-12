@@ -144,19 +144,20 @@ while True:
         sortedPucks.append(maximum)
         pucks.remove(maximum)
                 
-    scoringPucks = []            
-    scoreIsBlue = sortedPucks[0].getIsBlue()
-    runningScore = 0
-    for obj in sortedPucks:
-        if obj.getIsBlue()==scoreIsBlue:
-            runningScore += obj.getScore()
-        else: break
+    scoringPucks = []
+    if sortedPucks.len() > 0:        
+        scoreIsBlue = sortedPucks[0].getIsBlue()
+        runningScore = 0
+        for obj in sortedPucks:
+            if obj.getIsBlue()==scoreIsBlue:
+                runningScore += obj.getScore()
+            else: break
         
         
-    if scoreIsBlue:
-        print('Blue has '+ str(runningScore) + ' points')
-    else:
-        print('Red has '+ str(runningScore) + ' points')
+        if scoreIsBlue:
+            print('Blue has '+ str(runningScore) + ' points')
+        else:
+            print('Red has '+ str(runningScore) + ' points')
 
     if cv2.waitKey(400) == ord('q'):
         while True:
