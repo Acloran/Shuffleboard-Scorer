@@ -45,11 +45,13 @@ cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
 def drawRedorBlueCircle(imgin, imgout, x, y):
-    colormask = np.zeros((300,620,1), np.uint8)
-    cv2.circle(colormask,center,13,(255),10)
-    offset = 18
     xVal = int(x)
     yVal = int(y)
+    colormask = np.zeros((300,620,1), np.uint8)
+    cv2.circle(colormask,(int(x),int(y)),13,(255),10)
+    offset = 18
+    
+    
     # redTotal = 0
     # redTotal += imgin.item(xVal,yVal+10,2)
     # redTotal += imgin.item(xVal,yVal-10,2)
@@ -90,9 +92,9 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
         circleColor = (0,0,255)
 
     #cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
-    cv2.circle(imgout,center,18,circleColor,2)
+    cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
     # draw the center of the circle
-    cv2.circle(imgout,center,6,circleColor,-1)
+    cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
     
 
 def findAndDrawCircles(img, bgr_low, bgr_high):
