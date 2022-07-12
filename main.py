@@ -34,7 +34,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
         circleColor = (0,0,255)
         isBlue = False
 
-    cv2.putText(imgout, str(xVal), (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 1, cv2.LINE_AA)
+    #cv2.putText(imgout, str(xVal), (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 1, cv2.LINE_AA)
     cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
@@ -55,31 +55,6 @@ class Puck:
         return self.idNum
     def getScore(self):
         return self.score
-
-def findAndDrawCircles(img, bgr_low, bgr_high):
-	
-    mask = cv2.inRange(img, bgr_low, bgr_high)
-    median = cv2.medianBlur(mask,7)
-
-    kernel = np.ones((5,5),np.uint8)
-    kernel2 = np.ones((3,3),np.uint8)
-
-    closed = cv2.morphologyEx(median, cv2.MORPH_CLOSE, kernel)
-    eroded = cv2.erode(closed,kernel2,iterations = 1)
-
-    ret,thresh = cv2.threshold(eroded,127,255,0)
-    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
-
-    cv2.imshow('blue',closing)  
-    for i in contours[:]:
-        (x,y),radius = cv2.minEnclosingCircle(i)
-        center = (int(x),int(y))
-        radius = int(radius)
-        #cv2.circle(img,center,radius,(0,255,0),2)
-        if radius>10 and radius<25:
-            cv2.circle(outputImg,center,18,(255,0,0),2)
-            # draw the center of the circle
-            cv2.circle(outputImg,center,6,(255,0,0),-1)
 
 def drawTable(line1, line2, line3):
     #define an all black image
@@ -179,9 +154,9 @@ while True:
         
         
     if scoreIsBlue:
-        print('Blue has '+ str(runningScore))
+        print('Blue has '+ str(runningScore) + ' points')
     else:
-        print('Red has '+ str(runningScore))
+        print('Red has '+ str(runningScore) + ' points')
 
     if cv2.waitKey(400) == ord('q'):
         while True:
