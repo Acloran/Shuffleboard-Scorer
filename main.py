@@ -175,7 +175,7 @@ while True:
         else:
             print('Red puck at ' + str(obj.getXVal()))
         
-
+    print('NEXT')
     if cv2.waitKey(400) == ord('q'):
         while True:
             if cv2.waitKey(1) == ord('x'):
