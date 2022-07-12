@@ -49,49 +49,23 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     yVal = int(y)
     colormask = np.zeros((300,620,1), np.uint8)
     cv2.circle(colormask,(int(x),int(y)),13,(255),10)
-    offset = 18
     
-    
-    # redTotal = 0
-    # redTotal += imgin.item(xVal,yVal+10,2)
-    # redTotal += imgin.item(xVal,yVal-10,2)
-    # redTotal += imgin.item(xVal+10,yVal,2)
-    # redTotal += imgin.item(xVal-10,yVal,2)
-    # blueVal = redTotal/4
-
-    #puckBox = imgin[(xVal-offset):(xVal+offset), (yVal-offset):(yVal+offset)]
-    #cv2.rectangle(imgin, (xVal-offset, yVal-offset), (xVal+offset, yVal+offset), (0,255,0), 1)
-    #cv2.imshow('window',imgin)
-    #b = puckBox[:,:,2]
-    
-    #blueVal = np.mean(b, axis=None)
-    #print(blueVal)
-
-    
-
-    
-
-    #img2gray = cv2.cvtColor(imgin,cv2.COLOR_BGR2GRAY)
     ret, mask = cv2.threshold(colormask, 10, 255, cv2.THRESH_BINARY)
     result = cv2.bitwise_and(imgin, imgin, mask=mask)
     r = result[:,:,2]
 
     data = r[np.nonzero(r)]
-    #cv2.imshow('data',data)
-    #print(data)
     means = np.mean(data, axis=None)
 
-    #cv2.imshow('redpixels', r)
-    #circleColor = (255,255,255)
     redVal = round(means, 1)
-    strBlueVal = str(redVal)
+    strRedVal = str(redVal)
 
     if redVal < 180:
         circleColor = (255,0,0)
     else:
         circleColor = (0,0,255)
 
-    #cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
+    #cv2.putText(imgout, strRedVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
@@ -122,18 +96,23 @@ def findAndDrawCircles(img, bgr_low, bgr_high):
             # draw the center of the circle
             cv2.circle(outputImg,center,6,(255,0,0),-1)
 
-while True:
-
+def drawTable(line1, line2, line3):
     #define an all black image
     outputImg = np.zeros((300,620,3), np.uint8)
     #draw scoring lines and numbers
-    cv2.line(outputImg,(392,0),(392,300),(0,255,0),2)
-    cv2.line(outputImg,(498,0),(498,300),(0,255,0),2)
-    cv2.line(outputImg,(600,0),(600,300),(0,255,0),2)
+    cv2.line(outputImg,(line1,0),(line1,300),(0,255,0),2)
+    cv2.line(outputImg,(line2,0),(line2,300),(0,255,0),2)
+    cv2.line(outputImg,(line3,0),(line3,300),(0,255,0),2)
     font = cv2.FONT_HERSHEY_TRIPLEX
-    cv2.putText(outputImg,'1',(335,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'2',(426,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'3',(525,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'1',(line1-57,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'2',(line2-72,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    cv2.putText(outputImg,'3',(line3-75,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    return outputImg
+
+while True:
+
+    #define an all black image
+    outputImg = drawTable(392,498,600)
 
 
     ret, og = cam.read()
@@ -147,7 +126,7 @@ while True:
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
     dst = cv2.warpPerspective(og,M,(620,300))
-    cv2.imshow('raw',dst) 
+    #cv2.imshow('raw',dst) 
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -167,75 +146,22 @@ while True:
     kernel2 = np.ones((5,5),np.uint8)
 
     closing = cv2.morphologyEx(blueMask, cv2.MORPH_CLOSE, kernel)
-    #closing = cv2.erode(closing,kernel2,iterations = 1)
-    cv2.imshow('blue',closing)  
+    #cv2.imshow('blue',closing)  
     # #Drawing detected circles
-
-    # v = np.mean(closing)
-    # print(v)
-    # param1 = int(min(255, (1.0+.6) * v))
-
-    # bluecircles = cv2.HoughCircles(closing,cv2.HOUGH_GRADIENT,1.2,12,
-    #                         param1=30,param2=20,minRadius=12,maxRadius=25)
-    # if bluecircles is not None:
-    #     bluecircles = np.uint16(np.around(bluecircles))
-    # #print(circles)
-
-    #     for i in bluecircles[0,:]:
-    #         # draw the outer circle
-    #         cv2.circle(outputImg,(i[0],i[1]),18,(255,0,0),2)
-    #         # draw the center of the circle
-    #         cv2.circle(outputImg,(i[0],i[1]),2,(255,0,0),3)
     
     
-
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
 
-    cv2.imshow('blue',closing)  
+    #cv2.imshow('blue',closing)  
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
         center = (int(x),int(y))
         radius = int(radius)
-        #cv2.circle(img,center,radius,(0,255,0),2)
+       
         if radius>4 and radius<15:
             drawRedorBlueCircle(dst, outputImg, x, y)
-            #cv2.circle(outputImg,center,18,(255,0,0),2)
-            # draw the center of the circle
-            #cv2.circle(outputImg,center,6,(255,0,0),-1)
-
-    #making the red mask
-
-    # red_bgr_low = np.array([0, 166, 0], np.uint8)
-    # red_bgr_high = np.array([255, 255, 102], np.uint8)
-
-	
-    # redMask = cv2.inRange(frame, red_bgr_low, red_bgr_high)
-    # redMask = cv2.medianBlur(redMask,5)
-    # redMask = cv2.morphologyEx(redMask, cv2.MORPH_CLOSE, kernel)
-    # redMask = cv2.erode(redMask,kernel2,iterations = 1)
-
-    # #Drawing detected circles
-    # redcircles = cv2.HoughCircles(redMask,cv2.HOUGH_GRADIENT,1,10,
-    #                         param1=50,param2=20,minRadius=4,maxRadius=0)
-    # if redcircles is not None:
-    #     redcircles = np.uint16(np.around(redcircles))
-    #     #print(redcircles)
-    #     for i in redcircles[0,:]:
-    #         # draw the outer circle
-    #         cv2.circle(outputImg,(i[0],i[1]),18,(0,0,255),2)
-    #         # draw the center of the circle
-    #         cv2.circle(outputImg,(i[0],i[1]),2,(0,0,255),3)
-    # cv2.imshow('red',redMask)
-
-
-
-
-    #res = cv2.bitwise_and(dst, dst, mask=blueMask)
-
-    
-
-    # cv2.imshow('blurred',mask)
+            
     cv2.imshow('result',outputImg)
 
     #cv2.imshow('Camera', frame)
