@@ -78,8 +78,9 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     r = result[:,:,2]
 
     data = np.nonzero(r)
-    
-    means = np.mean(data)
+    cv2.imshow('data',data)
+    print(data)
+    means = np.mean(data, axis=None)
 
     cv2.imshow('redpixels', r)
     #circleColor = (255,255,255)
