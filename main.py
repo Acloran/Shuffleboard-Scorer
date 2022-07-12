@@ -45,7 +45,7 @@ class Puck:
         self.isBlue = isBlue
         self.xVal = xVal
         self.idNum = idNum
-        self.scoreVal = scoreVal
+        self.score = scoreVal
     
     def getXVal(self):
         return self.xVal
@@ -53,6 +53,8 @@ class Puck:
         return self.isBlue
     def getIDNum(self):
         return self.idNum
+    def getScore(self):
+        return self.score
 
 def findAndDrawCircles(img, bgr_low, bgr_high):
 	
@@ -132,7 +134,7 @@ while True:
     ret,thresh = cv2.threshold(closing,127,255,0)
     contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
   
-    puckPos = []
+    pucks = []
 
     for i in contours[:]:
         (x,y),radius = cv2.minEnclosingCircle(i)
@@ -151,31 +153,36 @@ while True:
             else: 
                 score = 0
 
-            puckPos.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y),i,score))
+            pucks.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y),i,score))
 
             
     cv2.imshow('result',outputImg)
 
-    sortedPuckPos = []
+    sortedPucks = []
 
-    while len(puckPos)>0:
-        maximum = puckPos[0]
-        for obj in puckPos:
+    while len(pucks)>0:
+        maximum = pucks[0]
+        for obj in pucks:
             
             if obj.getXVal()>maximum.getXVal():
                 maximum = obj
-        sortedPuckPos.append(maximum)
-        puckPos.remove(maximum)
+        sortedPucks.append(maximum)
+        pucks.remove(maximum)
                 
-                
-    
-    for obj in sortedPuckPos:
-        if obj.getIsBlue():
-            print('Blue puck at ' + str(obj.getXVal()))
-        else:
-            print('Red puck at ' + str(obj.getXVal()))
+    scoringPucks = []            
+    scoreIsBlue = sortedPucks[0].getIsBlue()
+    runningScore = 0
+    for obj in sortedPucks:
+        if obj.getIsBlue()==scoreIsBlue:
+            runningScore += obj.getScore()
+        else: break
         
-    print('NEXT')
+        
+    if scoreIsBlue:
+        print('Blue has '+ str(runningScore))
+    else:
+        print('Red has '+ str(runningScore))
+
     if cv2.waitKey(400) == ord('q'):
         while True:
             if cv2.waitKey(1) == ord('x'):
