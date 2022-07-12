@@ -65,7 +65,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     #blueVal = np.mean(b, axis=None)
     #print(blueVal)
 
-
+    blueVal = 230
 
     if blueVal < 230:
         circleColor = (255,0,0)
