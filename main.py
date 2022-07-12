@@ -56,7 +56,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     cv2.imshow('window',imgin)
     b = puckBox[:,:,2]
     
-    blueVal = np.average(b, axis=None, weights=None, returned=False)
+    blueVal = np.mean(b, axis=None, weights=None, returned=False)
     #print(blueVal)
     if blueVal < 230:
         circleColor = (255,0,0)
