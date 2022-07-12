@@ -47,12 +47,12 @@ cv2.createTrackbar('high R','controls',255,255,callback)
 def drawRedorBlueCircle(imgin, imgout, x, y):
     #colormask = np.zeros((300,620,3), np.uint8)
     #cv2.circle(colormask,center,12,(255,255,255),12)
-
+    offset = 18
     xVal = int(x)
     yVal = int(y)
     
-    puckBox = imgin[(xVal-20):(xVal+20), (yVal-20):(yVal+20)]
-    cv2.rectangle(imgin, (xVal-20, yVal-20), (xVal+20, yVal+20), (0,255,0), 3)
+    puckBox = imgin[(xVal-offset):(xVal+offset), (yVal-offset):(yVal+offset)]
+    cv2.rectangle(imgin, (xVal-offset, yVal-offset), (xVal+offset, yVal+offset), (0,255,0), 1)
     cv2.imshow('window',imgin)
     b = puckBox[:,:,2]
     
@@ -69,7 +69,7 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     blueVal = round(blueVal, 1)
     strBlueVal = str(blueVal)
     
-    cv2.putText(imgout, strBlueVal, (xVal+22,yVal), cv2.FONT_HERSHEY_SIMPLEX, 1, circleColor, 2, cv2.LINE_AA)
+    cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,center,6,circleColor,-1)
