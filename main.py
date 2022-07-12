@@ -65,12 +65,9 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     #blueVal = np.mean(b, axis=None)
     #print(blueVal)
 
-    blueVal = 230
+    
 
-    if blueVal < 230:
-        circleColor = (255,0,0)
-    else:
-        circleColor = (0,0,255)
+    
 
     #img2gray = cv2.cvtColor(imgin,cv2.COLOR_BGR2GRAY)
     ret, mask = cv2.threshold(colormask, 10, 255, cv2.THRESH_BINARY)
@@ -82,12 +79,17 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     #print(data)
     means = np.mean(data, axis=None)
 
-    cv2.imshow('redpixels', r)
+    #cv2.imshow('redpixels', r)
     #circleColor = (255,255,255)
-    blueVal = round(means, 1)
-    strBlueVal = str(blueVal)
-    
-    cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
+    redVal = round(means, 1)
+    strBlueVal = str(redVal)
+
+    if redVal < 180:
+        circleColor = (255,0,0)
+    else:
+        circleColor = (0,0,255)
+
+    #cv2.putText(imgout, strBlueVal, (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 2, cv2.LINE_AA)
     cv2.circle(imgout,center,18,circleColor,2)
     # draw the center of the circle
     cv2.circle(imgout,center,6,circleColor,-1)
