@@ -156,9 +156,17 @@ while True:
             
     cv2.imshow('result',outputImg)
 
-    puckPos.sort()
+    sortedPuckPos = []
 
-    for obj in puckPos:
+    while puckPos:
+        maximum = puckPos[0]
+        for obj in puckPos:
+            if obj.getXVal()>maximum.getXVal():
+                maximum = obj
+                puckPos.remove(obj)
+                sortedPuckPos.append(obj)
+
+    for obj in sortedPuckPos:
         if obj.getIsBlue():
             print('Blue puck at ' + str(obj.getXVal()))
         else:
