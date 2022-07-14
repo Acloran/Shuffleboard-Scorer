@@ -1,7 +1,7 @@
-from doctest import OutputChecker
+#from doctest import OutputChecker
 import numpy as np 
 import cv2
-import keyboard
+#import keyboard
 
 cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
