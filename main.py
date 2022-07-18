@@ -73,7 +73,7 @@ def drawTable(line1, line2, line3):
 #Start Picam
 picam2 = Picamera2()
 preview_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
-still_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "size": (3600, 2700})
+still_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "size": (3600, 2700)})
 picam2.configure(still_config)
 picam2.start()
 
