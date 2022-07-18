@@ -2,6 +2,7 @@ from doctest import OutputChecker
 import numpy as np 
 import cv2
 import keyboard
+from picamer2 import Picamer2
 
 cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
@@ -69,13 +70,21 @@ def drawTable(line1, line2, line3):
     cv2.putText(outputImg,'3',(line3-75,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
     return outputImg
 
+#Start Picam
+picam2 = Picamera2()
+preview_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
+still_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "size": (3600, 2700})
+picam2.configure(still_config)
+picam2.start()
+
+
 while True:
 
     #define an all black image
     outputImg = drawTable(392,498,600)
 
 
-    ret, og = cam.read()
+    ret, og = picam2.capture_array()
     
     #straighten image
     #og = cam
@@ -159,10 +168,10 @@ while True:
         else:
             print('Red has '+ str(runningScore) + ' points')
 
-    if cv2.waitKey(400) == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         while True:
             if cv2.waitKey(1) == ord('x'):
                 break
         break
-cam.release()
+picam2.close()
 cv2.destroyAllWindows()
