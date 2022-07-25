@@ -2,21 +2,23 @@ from doctest import OutputChecker
 import numpy as np 
 import cv2
 import keyboard
-from picamer2 import Picamer2
+from picamera2 import Picamera2
 
-cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
+# cam = cv2.VideoCapture(0)#,cv2.CAP_DSHOW)
 
-cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
+# cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+# cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
 
 #cam = cv2.imread('images/c1.png')
-
+outWidth = 800
+outHeight = 1600
 
 def drawRedorBlueCircle(imgin, imgout, x, y):
+    puckRadius = 50
     xVal = int(x)
     yVal = int(y)
-    colormask = np.zeros((300,620,1), np.uint8)
-    cv2.circle(colormask,(int(x),int(y)),13,(255),10)
+    colormask = np.zeros((outHeight,outWidth,1), np.uint8)
+    cv2.circle(colormask,(int(x),int(y)),35,(255),30)
     
     ret, mask = cv2.threshold(colormask, 10, 255, cv2.THRESH_BINARY)
     result = cv2.bitwise_and(imgin, imgin, mask=mask)
@@ -28,28 +30,28 @@ def drawRedorBlueCircle(imgin, imgout, x, y):
     redVal = round(means, 1)
     strRedVal = str(redVal)
 
-    if redVal < 180:
+    if redVal < 130:
         circleColor = (255,0,0)
         isBlue = True
     else:
         circleColor = (0,0,255)
         isBlue = False
 
-    #cv2.putText(imgout, str(xVal), (xVal+22,yVal+5), cv2.FONT_HERSHEY_SIMPLEX, .5, circleColor, 1, cv2.LINE_AA)
-    cv2.circle(imgout,(int(x),int(y)),18,circleColor,2)
+    cv2.putText(imgout, str(int(y)), (xVal+52,yVal+14), cv2.FONT_HERSHEY_SIMPLEX, 1.5, circleColor, 2, cv2.LINE_AA)
+    cv2.circle(imgout,(int(x),int(y)),47,circleColor,6)
     # draw the center of the circle
-    cv2.circle(imgout,(int(x),int(y)),6,circleColor,-1)
+    cv2.circle(imgout,(int(x),int(y)),20,circleColor,-1)
     return isBlue
     
 class Puck:
-    def __init__(self, xVal, isBlue, idNum, scoreVal):
+    def __init__(self, yVal, isBlue, idNum, scoreVal):
         self.isBlue = isBlue
-        self.xVal = xVal
+        self.yVal = yVal
         self.idNum = idNum
         self.score = scoreVal
     
-    def getXVal(self):
-        return self.xVal
+    def getYVal(self):
+        return self.yVal
     def getIsBlue(self):
         return self.isBlue
     def getIDNum(self):
@@ -59,65 +61,81 @@ class Puck:
 
 def drawTable(line1, line2, line3):
     #define an all black image
-    outputImg = np.zeros((300,620,3), np.uint8)
+    outputImg = np.zeros((1600,800,3), np.uint8)
     #draw scoring lines and numbers
-    cv2.line(outputImg,(line1,0),(line1,300),(0,255,0),2)
-    cv2.line(outputImg,(line2,0),(line2,300),(0,255,0),2)
-    cv2.line(outputImg,(line3,0),(line3,300),(0,255,0),2)
+    lineThick = 8
+    cv2.line(outputImg,(0,line1),(800,line1),(0,255,0),lineThick)
+    cv2.line(outputImg,(0,line2),(800,line2),(0,255,0),lineThick)
+    cv2.line(outputImg,(0,line3),(800,line3),(0,255,0),lineThick)
+    
     font = cv2.FONT_HERSHEY_TRIPLEX
-    cv2.putText(outputImg,'1',(line1-57,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'2',(line2-72,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
-    cv2.putText(outputImg,'3',(line3-75,165), font, 2.2,(0,255,0),2,cv2.LINE_AA)
+    fontScale = 5
+    fontThickness = 5
+    cv2.putText(outputImg,'1',(365,line1+175), font, fontScale,(0,255,0),fontThickness,cv2.LINE_AA)
+    cv2.putText(outputImg,'2',(365,line2+175), font, fontScale,(0,255,0),fontThickness,cv2.LINE_AA)
+    cv2.putText(outputImg,'3',(365,line3+175), font, fontScale,(0,255,0),fontThickness,cv2.LINE_AA)
     return outputImg
+
+def resizeImg(img, width, height):
+    return cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
 
 #Start Picam
 picam2 = Picamera2()
-preview_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)})
-still_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "size": (3600, 2700)})
-picam2.configure(still_config)
+
+preview_config = picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 320)})
+capture_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "size": (4656, 3496)})
+picam2.configure(capture_config)
 picam2.start()
 
 
 while True:
 
     #define an all black image
-    outputImg = drawTable(392,498,600)
-
-
-    ret, og = picam2.capture_array()
+    outputImg = drawTable(546,271,0)
     
+    #get the image from the camera
+    
+    
+    
+
+    og = picam2.capture_array()
+    og = cv2.cvtColor(og, cv2.COLOR_BGRA2BGR)
     #straighten image
     #og = cam
     
-    pts1 = np.float32([[297,317],[734,319],[732,541],[292,528]])
-    pts2 = np.float32([[0,0],[600,0],[600,300],[0,300]])
+    
+    pts1 = np.float32([[2010,1186],[2813,1209],[2774,2912],[1940,2878]])
+    pts2 = np.float32([[0,0],[outWidth,0],[outWidth,outHeight],[0,outHeight]])
 
     M = cv2.getPerspectiveTransform(pts1,pts2)
 
-    dst = cv2.warpPerspective(og,M,(620,300))
-    cv2.imshow('raw',dst) 
+    dst = cv2.warpPerspective(og,M,(outWidth,outHeight))
+    
+    resized = resizeImg(dst, 300, 600)
+    #cv2.imshow('resized', resized)
     #recolor Image
     frame = cv2.bitwise_not(dst)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     
 
 
-    bgr_low = np.array([30, 0, 59], np.uint8)
-    bgr_high = np.array([210, 135, 255], np.uint8)
+    bgr_low = np.array([95, 31, 120], np.uint8)
+    bgr_high = np.array([211, 165, 217], np.uint8)
 
 	
     greenMask = cv2.inRange(frame, bgr_low, bgr_high)
     greenMask = cv2.medianBlur(greenMask,7)
 
-    kernel = np.ones((7,7),np.uint8)
+    kernel = np.ones((9,9),np.uint8)
     kernel2 = np.ones((5,5),np.uint8)
 
     closing = cv2.morphologyEx(greenMask, cv2.MORPH_CLOSE, kernel)
  
     
     ret,thresh = cv2.threshold(closing,127,255,0)
-    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE) 
-  
+    contours,hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE)
+    smallthresh = resizeImg(thresh, 300, 600)
+    #cv2.imshow('mask',smallthresh) 
     pucks = []
 
     for i in contours[:]:
@@ -125,33 +143,35 @@ while True:
         center = (int(x),int(y))
         radius = int(radius)
        #scoring breakdown
-        if radius>4 and radius<15:
-            if x>580:
+        if radius>15 and radius<30 and cv2.contourArea(i)>300:
+            if y<42:
                 score = 4
-            elif x>518:
+            elif y<208:
                 score = 3
-            elif x>412:
+            elif y<487:
                 score = 2
-            elif x>20:
+            elif y<1552:
                 score = 1
             else: 
                 score = 0
 
-            pucks.append(Puck(int(x),drawRedorBlueCircle(dst, outputImg, x, y),i,score))
+            pucks.append(Puck(int(y),drawRedorBlueCircle(dst, outputImg, x, y),i,score))
 
-            
-    cv2.imshow('result',outputImg)
-
+    smallImg = resizeImg(outputImg, 450, 900)
+    cv2.imshow('result',smallImg)        
+    #cv2.imshow('result',outputImg)
+    #resized = cv2.resize(outputImg, dim, interpolation = cv2.INTER_AREA)
+    #cv2.imshow('result',resized)
     sortedPucks = []
 
     while len(pucks)>0:
-        maximum = pucks[0]
+        minimum = pucks[0]
         for obj in pucks:
             
-            if obj.getXVal()>maximum.getXVal():
-                maximum = obj
-        sortedPucks.append(maximum)
-        pucks.remove(maximum)
+            if obj.getYVal()<minimum.getYVal():
+                minimum = obj
+        sortedPucks.append(minimum)
+        pucks.remove(minimum)
                 
     scoringPucks = []
     if len(sortedPucks) > 0:        
@@ -168,10 +188,7 @@ while True:
         else:
             print('Red has '+ str(runningScore) + ' points')
 
-    if cv2.waitKey(1) == ord('q'):
-        while True:
-            if cv2.waitKey(1) == ord('x'):
-                break
+    if cv2.waitKey(500) == ord('q'):
         break
 picam2.close()
 cv2.destroyAllWindows()

@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import keyboard
 
-cam = cv2.imread('images/c1.png')
+cam = cv2.imread('images/c2.png')
 
 def callback(x):
     global B_low,B_high,G_low,G_high,R_low,R_high
@@ -39,7 +39,8 @@ cv2.createTrackbar('high G','controls',255,255,callback)
 cv2.createTrackbar('low R','controls',0,255,callback)
 cv2.createTrackbar('high R','controls',255,255,callback)
 
-
+def resizeImg(img, width, height):
+    return cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
 
 while True:
 
@@ -52,18 +53,23 @@ while True:
 
     # dst = cv2.warpPerspective(og,M,(620,300))
     dst = cam
-    cv2.imshow('raw',dst) 
+    smalldst = resizeImg(dst,300,600)
+    cv2.imshow('raw',smalldst) 
     #recolor Image
     frame = cv2.bitwise_not(dst)
+    smallframe = resizeImg(frame,300,600)
+    cv2.imshow('invert',smallframe) 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    smallhsv = resizeImg(hsv,300,600)
+    cv2.imshow('hsv',smallhsv) 
 
     blue_bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     blue_bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-
-    cv2.imshow('masked img', blueMask)
+    smallblue = resizeImg(blueMask,300,600)
+    cv2.imshow('masked img', smallblue)
 
     if cv2.waitKey(1) == ord('q'):
         break
