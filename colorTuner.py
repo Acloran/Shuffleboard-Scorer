@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import keyboard
 
-cam = cv2.imread('images/c2.png')
+cam = cv2.imread('images/c1.png')
 
 def callback(x):
     global B_low,B_high,G_low,G_high,R_low,R_high
@@ -53,23 +53,25 @@ while True:
 
     # dst = cv2.warpPerspective(og,M,(620,300))
     dst = cam
-    smalldst = resizeImg(dst,300,600)
-    cv2.imshow('raw',smalldst) 
+    dst = dst[ 1130:1240,2040:2080]
+    #smalldst = resizeImg(dst, 763,1200)
+    #smalldst = resizeImg(dst,500,1000)
+    cv2.imshow('raw',dst) 
     #recolor Image
     frame = cv2.bitwise_not(dst)
-    smallframe = resizeImg(frame,300,600)
-    cv2.imshow('invert',smallframe) 
+    #smallframe = resizeImg(frame,532,400)
+    #cv2.imshow('invert',smallframe) 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    smallhsv = resizeImg(hsv,300,600)
-    cv2.imshow('hsv',smallhsv) 
+    #smallhsv = resizeImg(hsv,300,600)
+    #cv2.imshow('hsv',smallhsv) 
 
     blue_bgr_low = np.array([B_low, G_low, R_low], np.uint8)
     blue_bgr_high = np.array([B_high, G_high, R_high], np.uint8)
 
 	
     blueMask = cv2.inRange(frame, blue_bgr_low, blue_bgr_high)
-    smallblue = resizeImg(blueMask,300,600)
-    cv2.imshow('masked img', smallblue)
+    #smallblue = resizeImg(blueMask,763,1200)
+    cv2.imshow('masked img', blueMask)
 
     if cv2.waitKey(1) == ord('q'):
         break
