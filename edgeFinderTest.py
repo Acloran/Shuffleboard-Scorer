@@ -200,10 +200,10 @@ def scorePucks(sortedPuckList):
             return (0,runningScore)
         else:
             return (runningScore,0)
-
-def findEdgePointY(img,x1,y1):
-    width = 40
-    height = 100
+def findEdgePoint(img,x1,y1):
+    #find the edge of the table
+    width = 80
+    height = 80
     halfWidth = int(width/2)
     halfHeight = int(height/2)
 
@@ -211,66 +211,90 @@ def findEdgePointY(img,x1,y1):
     tlY = y1-halfHeight
 
     poi = img[tlY:tlY+height,tlX:tlX+width]
-   
+    
     processedImg = recolorImg(poi)
     
+    tl = processedImg.item(0,0)
+    tr = processedImg.item(0,width-1)
+    bl = processedImg.item(height-1,0)
+    br = processedImg.item(height-1,width-1)
+
+    if (tl + bl)/2 > (tr + br)/2:
+        rangeVal1 = width-1
+        rangeVal2 = 0
+        rangeVal3 = -1
+        valX1 = width - 1
+        valX2 = width - 1
+        valY1 = 0
+        valY2 = height-1
+        iX = True
+        leftWhite = True
+        #print('case1')
+    elif (tl + bl)/2 < (tr + br)/2:
+        rangeVal1 = 0
+        rangeVal2 = width-1
+        rangeVal3 = 1
+        valX1 = 0
+        valX2 = 0
+        valY1 = 0
+        valY2 = height-1
+        iX = True
+        leftWhite = False
+        #print('case2')
+    else:
+        rangeVal1 = 0
+        rangeVal2 = height-1
+        rangeVal3 = 1
+        valX1 = 0
+        valX2 = width-1
+        valY1 = 0
+        valY2 = 0
+        iX = False
+        #print('case3')
+
     #(y,x) = processedImg.shape
-    leftY = halfHeight
-    rightY = halfHeight
-    for i in range(0,height-1):
-        if processedImg.item(i,0)==255:
-            leftY = i
+    dist1 = halfHeight
+    dist2 = halfHeight
+    done1 = False
+    done2 = False
+    for i in range(rangeVal1,rangeVal2,rangeVal3):
+        if iX:
+            valX1 = i
+            valX2 = i
+        else:
+            valY1 = i
+            valY2 = i
+        
+        if processedImg.item(valY1,valX1)==255 and not done1:
+            dist1 = i
+            done1 = True
+            
+        #print(processedImg.item(valY2,valX2))
+        if processedImg.item(valY2,valX2)==255 and not done2:
+            dist2 = i
+            done2 = True
+            
+
+        if done1 and done2:
             break
 
-    for i in range(0,height-1):
-        if processedImg.item(i,width-1)==255:
-            rightY = i
-            break
+    average = (dist1+dist2)/2.0
+    #print('dist1:',dist1,'dist2:',dist2,)
+    #cv2.imshow('processed',processedImg)
+    #cv2.imshow('poi',poi)
+    if iX:
+        outX = tlX + int(average)
+        outY = tlY + halfHeight
+    else:
+        outX = tlX+halfWidth
+        outY = tlY+int(average)
 
-    avY = (leftY+rightY)/2.0
-    
+    return (outX,outY)
     #cv2.circle(poi,(int(x/2),int(avY)),5,(0,0,255),-1)
     #print(avY)
     #cv2.imshow('poi',poi)
-    outX = tlX+halfWidth
-    outY = tlY+int(avY)
-    return (outX, outY)
-
-def findEdgePointY(img,x1,y1):
-    width = 100
-    height = 40
-    halfWidth = int(width/2)
-    halfHeight = int(height/2)
-
-    tlX = x1-halfWidth
-    tlY = y1-halfHeight
-
-    poi = img[tlY:tlY+height,tlX:tlX+width]
-   
-    processedImg = recolorImg(poi)
     
-    #(y,x) = processedImg.shape
-    topX = halfWidth
-    bottomX = halfWidth
-    for i in range(0,width-1):
-        if processedImg.item(0,i)==255:
-            topX = i
-            break
-
-    for i in range(0,width-1):
-        if processedImg.item(height-1,i)==255:
-            bottomX = i
-            break
-
-    avX = (topX+bottomX)/2.0
     
-    #cv2.circle(poi,(int(x/2),int(avY)),5,(0,0,255),-1)
-    #print(avY)
-    cv2.imshow('poi',poi)
-    outX = tlX+int(avX)
-    outY = tlY+halfHeight
-    return (outX, outY)
-
 #Start Picam
 picam2 = Picamera2()
 
@@ -294,10 +318,14 @@ while True:
     
     
 
-
-    print('backpoint:', findEdgePointY(og,2064,1188))
-    print('leftpoint:', findEdgePointY(og,1980,1224))
-
+    #for case1
+    print('point1:', findEdgePoint(og,2818,1294))
+    #for case2
+    print('point2:', findEdgePoint(og,1981,1548))
+    #for case3
+    print('point3:', findEdgePoint(og,2237,1184), '\n')
+    
+    
     if cv2.waitKey(1) == ord('q'):
         break
 picam2.close()
