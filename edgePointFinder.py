@@ -165,8 +165,8 @@ def calculateCorners(img,x1,y1,x2,y2,x3,y3,x4,y4):
     x = (b_2-b_1)/(m_1-m_2)
     y = m_1*x + b_1
 
-    xLower = x - 1695.2*np.cos(np.arctan(m_1))
-    yLower = y - 1695.2*np.sin(np.arctan(m_1))
+    xLower = x + 1695.2*np.cos(np.arctan(m_1))
+    yLower = y + 1695.2*np.sin(np.arctan(m_1))
     
     return (int(x),int(y)),(int(xLower),int(yLower))
     
@@ -196,12 +196,12 @@ while True:
     
 
     
-    x1,y1 = 1935,2800 #bottom left
-    x2,y2 = 2008,1250 #top left left
-    x3,y3 = 2076,1187  #top left right
-    x4,y4 = 2760,1206 #top right left
-    x5,y5 = 2774,2867 #bottom right
-    x6,y6 = 2800,1285 #top right right
+    x1,y1 = 2431,2715 #bottom left
+    x2,y2 = 2237,1173 #top left left
+    x3,y3 = 2300,1095  #top left right
+    x4,y4 = 3000,1043 #top right left
+    x5,y5 = 3075,1080 #bottom right
+    x6,y6 = 3173,2700 #top right right
 
     BLCorner,FLCorner = calculateCorners(og,x1,y1,x2,y2,x3,y3,x4,y4)
     BRCorner,FRCorner = calculateCorners(og,x5,y5,x6,y6,x3,y3,x4,y4)
