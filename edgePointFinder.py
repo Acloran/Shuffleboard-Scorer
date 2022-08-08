@@ -4,6 +4,7 @@ import cv2
 import keyboard
 from picamera2 import Picamera2
 from main import *
+from arducam.focus.Focuser import Focuser
 
 def recolorTableImg(img):
     frame = cv2.bitwise_not(img)
@@ -150,22 +151,22 @@ def calculateCorners(img,x1,y1,x2,y2,x3,y3,x4,y4):
     x_4,y_4 = findEdgePoint(img,x4,y4)
 
     if x_2-x_1 != 0:
-        m1 = (y_2-y_1)/(x_2-x_1)
+        m_1 = (y_2-y_1)/(x_2-x_1)
     else:
-        m1 = 2147483647
+        m_1 = 21474836
     if x_4-x_3 != 0:
-        m2 = (y_4-y_3)/(x_4-x_3)
+        m_2 = (y_4-y_3)/(x_4-x_3)
     else:
-        m2 = 2147483647
-    m_1 = (y_2-y_1)/(x_2-x_1)
-    m_2 = (y_4-y_3)/(x_4-x_3)
+        m_2 = 21474836
+    #m_1 = (y_2-y_1)/(x_2-x_1)
+    #m_2 = (y_4-y_3)/(x_4-x_3)
     b_1 = y_1 - m_1*x_1
     b_2 = y_3 - m_2*x_3
     x = (b_2-b_1)/(m_1-m_2)
     y = m_1*x + b_1
 
-    xLower = x - 1695.2*np.cos(np.arctan(m1))
-    yLower = y - 1695.2*np.sin(np.arctan(m1))
+    xLower = x - 1695.2*np.cos(np.arctan(m_1))
+    yLower = y - 1695.2*np.sin(np.arctan(m_1))
     
     return (int(x),int(y)),(int(xLower),int(yLower))
     
@@ -177,6 +178,8 @@ capture_config = picam2.create_still_configuration(main={"format": 'XRGB8888', "
 picam2.configure(capture_config)
 picam2.start()
 
+focuser = Focuser('/dev/v4l-subdev1')
+focuser.set(Focuser.OPT_FOCUS,750)
 
 while True:
 
@@ -192,13 +195,13 @@ while True:
     
     
 
-    #for case1
-    x1,y1 = 1935,2800
-    x2,y2 = 2008,1250
-    x3,y3 = 2076,1187
-    x4,y4 = 2760,1206
-    x5,y5 = 2774,2867
-    x6,y6 = 2800,1285
+    
+    x1,y1 = 1935,2800 #bottom left
+    x2,y2 = 2008,1250 #top left left
+    x3,y3 = 2076,1187  #top left right
+    x4,y4 = 2760,1206 #top right left
+    x5,y5 = 2774,2867 #bottom right
+    x6,y6 = 2800,1285 #top right right
 
     BLCorner,FLCorner = calculateCorners(og,x1,y1,x2,y2,x3,y3,x4,y4)
     BRCorner,FRCorner = calculateCorners(og,x5,y5,x6,y6,x3,y3,x4,y4)
